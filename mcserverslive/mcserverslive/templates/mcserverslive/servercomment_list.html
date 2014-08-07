@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+<h4>Comments</h4>
+<div>
+	{% if object_list %}
+		{% for comment in object_list %}
+			{% include 'servercomment_list_item.html' %}
+		{% endfor %}
+		
+		{% include 'pagination.html' %}		
+
+	{% else %}
+		<p>No comments to show.</p>
+	{% endif %}
+
+</div>
+{% endblock %}

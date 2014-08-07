@@ -1,0 +1,40 @@
+<div id="auth_bar">
+	{% ifnotequal request.path '/accounts/login/' %} 
+	{% ifnotequal request.path '/accounts/logout/' %}
+
+	{% if user.is_authenticated %}
+
+			<form method="post" action="{% url 'django.contrib.auth.views.logout' %}">{% csrf_token %}
+				<table id="login_head2">
+					<tr>
+						<td>Welcome, {{ user.username }}!</td>
+						<td><input type="submit" value="Logout" /></td>
+					</tr>
+				</table>
+				<input type="hidden" name="next" value="{% url 'django.contrib.auth.views.logout' %}" />
+			</form>
+
+	{% else %}
+
+			<form method="post" action="{% url 'auth_login' %}">{% csrf_token %}
+				<table>
+					<tr>
+		    			<td>{{ login_form.username.label_tag }}</td>
+		    			<td>{{ login_form.username }}</td>
+						<td>{{ login_form.password.label_tag }}</td>
+		    			<td>{{ login_form.password }}</td>
+						<td><input type="submit" value="Login" /></td>
+					</tr>
+				</table>
+				{% if form.errors %}
+					<p>Your username and password didn't match. Please try again.</p>
+				{% endif %}
+				<p><a href="{% url 'accounts:register' %}">Register</a> | <a href="{% url 'django.contrib.auth.views.password_reset' %}">Forgot my info</a></p>
+				<input type="hidden" name="next" value="{{ request.get_full_path }}" />
+			</form>
+
+	{% endif %}
+
+	{% endifnotequal %}
+	{% endifnotequal %}
+</div>

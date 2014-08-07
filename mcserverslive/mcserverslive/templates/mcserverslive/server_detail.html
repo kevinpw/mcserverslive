@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+<div>
+	<table style="width: 100%;">
+		<tr>
+			<td><h3>{{ server.server_name }}</h3></td>
+			<td>
+				{% ifequal server.user request.user %}
+					<div id="delete_button">
+						<a href="{% url 'delete' server.pk %}">DELETE</a>
+					</div>
+					<div id="edit_button">
+						<a href="{% url 'update' server.pk %}">Edit</a>
+					</div>
+				{% endifequal %}
+			</td>
+		</tr>
+	</table>
+
+	{% comment %}
+		<p>Stats</p>
+		<img id="stat_graph" src="{{ MEDIA_URL}}{{ server.graph }}" />
+	{% endcomment %}
+
+	<table style="padding-top: 50px;">
+		<tr>
+			<td>
+				<img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" />
+			</td>
+			<td>
+				<table>
+					<tr><td style="padding-left: 50px;">Version: {{ server.version }}</td></tr>
+					<tr><td style="padding-left: 50px;">Ip: {{ server.ip }}</td></tr>
+					<tr><td style="padding-left: 50px;">Port: {{ server.port }}</td></tr>
+					<tr><td style="padding-left: 50px;">Game type: {{ server.game_type }}</td></tr>
+					<tr><td style="padding-left: 50px;">Max players: {{ server.max_players }}</td></tr>
+					<tr><td style="padding-left: 50px;">Num players: {{ np }}</td></tr>
+					<tr><td style="padding-left: 50px;">Last queried: {{ dt }} minutes ago</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr><td>MOTD: {{ server.motd }}</td></tr>
+		{% if server.website %}
+			<tr><td>Website: {{ server.website }}</td></tr>
+		{% endif %}
+	</table>
+
+	<h4>Description</h4>
+		<p>{{ server.description }}</p>
+
+	<h4>Plugins</h4>
+		{% if server.plugin_set.all %}
+			{% for plugin in server.plugin_set.all %}
+				{% ifequal forloop.counter 1 %}
+					{% if forloop.last %}
+						{{ plugin }}
+					{% else %}
+						{{ plugin }},
+					{% endif %}
+				{% else %}
+					{% if forloop.last %}
+						{{ plugin }}
+					{% else %}
+						{{ plugin }},
+					{% endif %}
+				{% endifequal %}
+			{% endfor %}
+		{% else %}
+				<p>Vanilla server. No plugins</p>
+		{% endif %}
+
+	<table style="width:100%;">
+		<tr>
+			<td><h4>Recent Comments</h4></td>
+			<td><div id="all_comments_button"><a href="{% url 'server_comments' server.pk %}">All comments</a></div></td>
+		</tr>
+	</table>
+	<hr />
+	{% if server.servercomment_set %}
+		{% for comment in server.servercomment_set.all reversed %}
+			{% if forloop.counter0 < 10 %}
+				{% include 'servercomment_list_item.html' %}
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<p>No comments.</p>
+	{% endif %}
+	{% if user.is_authenticated %}
+	<h4>Post a new comment<h4>
+		<form method="post" action="{% url 'post_comment' server.pk %}">{% csrf_token %}
+			<table>
+				<tr><td><label for="id_comment">Comment</label></td></tr>
+				<tr><td><div id="counter_description">Maximum characters: 300</div></td></tr>
+				<tr><td><textarea style="resize: none;" rows="4" cols="50" name="comment", onKeyUp="textCounter(this,'counter_description',300);"></textarea></td></tr>
+				<tr><td><input type="submit" value="Post" /></td></tr>
+			</table>
+		</form>
+	{% else %}
+		<h4>Sign in to post a comment</h4>
+	{%endif %}
+</div>
+{% endblock %}

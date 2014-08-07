@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Server Form{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+<div>
+	{% if rand_motd %}
+		<h3>Add a Server Listing</h3>
+	{% else %}
+		<h3>Update a Server Listing</h3>
+	{% endif %}
+	<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+
+			{% if rand_motd %}
+				<p><b>Reload your server with the following MOTD to add. You can change this after your server is listed.</b></p>
+				<p><b>{{ rand_motd }}</b></p>
+				<input type="hidden" name="rand_motd" value="{{ rand_motd }}" />
+			{% else %}
+				<input type="hidden" name="rand_motd" value="" />
+			{% endif %}
+				
+
+		<table>
+			{{ form.non_field_errors }}
+			<tr><td>{{ form.server_name.errors }}</td></tr>
+			<tr>
+				<td>{{ form.server_name.label }}</td>
+				<td>{{ form.server_name }}</td>
+			</tr>
+			<tr><td>{{ form.banner.errors }}</td></tr>
+			<tr>
+				<td>{{ form.banner.label }}</td>
+				<td>{{ form.banner }}</td>
+			</tr>
+			<tr><td></td><td>must be 300x50 pixels, &lt;10 MB</td></tr>
+			<tr><td>{{ form.ip.errors }}</td></tr>
+			<tr>
+				<td>{{ form.ip.label }}</td>
+				<td>{{ form.ip }}</td>
+			</tr>
+			<tr><td>{{ form.port.errors }}</td></tr>
+			{% if rand_motd %}
+				<tr>
+					<td>Query {{ form.port.label | lower }}</td>
+					<td>{{ form.port }}</td>
+				</tr>
+			{% endif %}
+			<tr><td>{{ form.description.errors }}</td></tr>
+			<tr><td></td><td><div id="counter_description">Maximum characters: 2000</div></td></tr>
+			<tr>
+				<td>{{ form.description.label }}</td>
+				<td>{{ form.description }}</td>
+			</tr>
+			<tr><td>{{ form.website.errors }}</td></tr>
+			<tr>
+				<td>{{ form.website.label }}</td>
+				<td>{{ form.website }}</td>
+			</tr>
+		</table>
+		<br />
+		<input type="submit" value="Submit" />
+	</form>
+</div>	
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html  lang="en">
+
+{% load staticfiles %}
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="Minecraft Server List" />
+	<title>some website {% block title %}{% endblock %}</title>
+	<link rel="icon" type="image/ico" href="{% static "images/favicon.ico" %}" />
+	<link rel="stylesheet" href="{% static "styles/main.css" %}" />
+	<script src="{% static "js/functions.js" %}"></script>
+</head>
+
+<body>
+	<div id="wrapper"> 
+
+		{% include "banner.html" %}
+		{% block auth_bar %}{% endblock %}
+		{% include "nav.html" %}
+
+		<div id="main">
+			{% block content %}{% endblock %}
+		</div>
+
+	</div> 
+
+	{% block footer %}{% endblock %}
+
+</body>
+
+</html>

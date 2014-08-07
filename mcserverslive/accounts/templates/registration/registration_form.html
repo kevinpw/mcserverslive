@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Registeration{% endblock %}
+
+{% block content %}
+<div class="padding_50px">
+<form method='post' action='.'>{% csrf_token %}
+	{{ form.non_field_errors }}
+	<table>
+		<tr><td>{{ form.username.errors }}</td></tr>
+		<tr>
+    		<td>{{ form.username.label_tag }}</td>
+    		<td>{{ form.username }}</td>
+		</tr>
+		<tr><td>{{ form.email.errors }}</td></tr>
+		<tr>
+    		<td>{{ form.email.label_tag }}</td>
+    		<td>{{ form.email }}</td>
+		</tr>
+		<tr><td>{{ form.password1.errors }}</td></tr>
+		<tr>
+    		<td>{{ form.password1.label_tag }}</td>
+    		<td>{{ form.password1 }}</td>
+		</tr>
+		<tr><td>{{ form.password2.errors }}</td></tr>
+		<tr>
+    		<td>{{ form.password2.label_tag }}</td>
+    		<td>{{ form.password2 }}</td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<td>{{ form.captcha }}<td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<td><input type="submit" value="Submit"/></td>  
+		</tr>
+	</table>
+</form>
+</div>
+{% endblock %}

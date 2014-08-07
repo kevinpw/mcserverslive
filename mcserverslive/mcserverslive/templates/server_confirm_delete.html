@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Server Form{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm" />
+</form>
+
+{% endblock %}

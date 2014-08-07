@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+<div id="server_list_head">
+	<table>
+		<tr>
+			<td>Name</td>
+			<td>Description</td>
+			<td>Current/Max Players</td>
+		</tr>
+	</table>
+</div>
+<div id="server_list">
+	{% if object_list %}
+		<ul>
+			{% for server, dt, np in object_tuples %}
+				<li>
+					<table>
+						<tr>
+							<td><a href="{% url 'detail' server.pk %}">{{ server.server_name }}</a></td>
+							<td>
+								<a href="{% url 'detail' server.pk %}">
+									<img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" />
+								</a>
+								<p>version: {{ server.version }}, ip: {{ server.ip }}, port: {{ server.port }}</p>
+								<p>{{ server.motd }}, {{ server.game_type }}</p>
+								<p>Last query: {{ dt }} minutes ago</p>
+							</td>
+							<td>
+								{% ifnotequal np None %}
+									{{ np }}/{{ server.max_players }}
+								{% else %}
+									offline
+								{% endifnotequal %}
+							</td>
+							<td>
+								{% ifequal server.user request.user %}
+									<div id="edit_button">
+										<a href="{% url 'update' server.pk %}">Edit</a>
+									</div>
+								{% endifequal %}
+							</td>
+						</tr>
+					</table>
+				</li>
+			{% endfor %}
+		</ul>
+		
+		{% include 'pagination.html' %}		
+
+	{% else %}
+		<p>No servers to show.</p>
+	{% endif %}
+
+</div>
+{% endblock %}
