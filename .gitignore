@@ -4,7 +4,6 @@ media/
 local_settings.py
 donate.html
 emails.txt
-auto_updater.py
 
 *.pyc
 *.png
