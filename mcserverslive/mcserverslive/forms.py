@@ -2,7 +2,7 @@ from django.forms import ModelForm, ValidationError, Textarea, CharField, Hidden
 from django.core.files.images import get_image_dimensions
 from django.core.files import File
 from django.conf import settings
-from datetime import datetime
+from django.utils import timezone
 
 from mcserverslive.models import Server, ServerComment
 from mcstatus.minecraft_query import MinecraftQuery
@@ -73,7 +73,7 @@ class ServerCreateForm(ModelForm):
 		if commit:
 			instance.save()
 
-		right_now = datetime.now()
+		right_now = timezone.now()
 		num_players=self.full_status['numplayers']
 		instance.numplayers_set.create(query_time = right_now, num_players = num_players)
 		instance.archivenumplayers_set.create(query_time = right_now, num_players = num_players, percent_up=100)	
@@ -97,7 +97,7 @@ class ServerCommentForm(ModelForm):
 
 	def save(self, commit=True):
 		instance = super(ServerCommentForm, self).save(commit=False)
-		instance.comment_time = datetime.now()
+		instance.comment_time = timezone.now()
 		if commit:
 			instance.save()
 		return instance

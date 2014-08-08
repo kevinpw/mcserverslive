@@ -29,6 +29,8 @@ INSTALLED_APPS = (
 
 	'registration',
 	'captcha',
+	'dajaxice',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,7 +53,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'America/New_York'
 USE_I18N = True
 USE_L10N = True
-USE_TZ = False
+USE_TZ = True
 
 # import local_settings
 from local_settings import *
@@ -62,5 +64,11 @@ TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
 	"django.core.context_processors.request",
 	"accounts.context_processors.include_login_form",
 	"accounts.context_processors.domain",
+)
+TEMPLATE_LOADERS = DEFAULT_SETTINGS.TEMPLATE_LOADERS + (
+	'django.template.loaders.eggs.Loader',
+)
+STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS + (
+	'dajaxice.finders.DajaxiceFinder',
 )
 

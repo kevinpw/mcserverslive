@@ -24,10 +24,14 @@
 		</tr>
 	</table>
 
-	{% comment %}
-		<p>Stats</p>
-		<img id="stat_graph" src="{{ MEDIA_URL}}{{ server.graph }}" />
-	{% endcomment %}
+		<h4>History</h4>
+		<div id="pk" class="display_none">{{ server.pk }}</div>
+		<h5>Server Percentage Up Time</h5>
+		<div class="flot_ts_container">
+			<div id="flot_time_series" class="flot_ts_div"></div>
+		</div>
+
+		<h4>Current</h4>
 
 	<table style="padding-top: 50px;">
 		<tr>
@@ -106,4 +110,5 @@
 		<h4>Sign in to post a comment</h4>
 	{%endif %}
 </div>
+
 {% endblock %}

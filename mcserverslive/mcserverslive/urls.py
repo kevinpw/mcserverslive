@@ -4,8 +4,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
+from django.http import HttpResponse
+
 from django.contrib import admin
 admin.autodiscover()
+
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
 
 from mcserverslive.views import *
 
@@ -20,6 +25,8 @@ urlpatterns = patterns('',
 	url(r'^server_delete/(?P<pk>\d+)/$', ServerDeleteView.as_view(), name='delete'),
 	url(r'^server_post_comment/(?P<pk>\d+)/$', require_POST(ServerCommentSubmitView.as_view()), name='post_comment'),
 	url(r'^donate/$', TemplateView.as_view(template_name='donate.html'), name='donate'),
+
+	url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 
 	url(r'^accounts/', include('accounts.urls',namespace='accounts')),
 	url(r'^accounts/', include('registration.backends.default.urls')),

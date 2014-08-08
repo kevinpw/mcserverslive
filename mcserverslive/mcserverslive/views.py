@@ -4,8 +4,9 @@ from django.utils.decorators import method_decorator
 from django.forms import ValidationError
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 import random
 import string
 
@@ -26,7 +27,7 @@ class ServerListView(ListView):
 		object_tuples = []
 		for obj in object_list:
 			num_players = obj.numplayers_set.all().latest('query_time')
-			right_now = datetime.now()
+			right_now = timezone.now()
 			if num_players:	
 				seconds = (right_now - num_players.query_time).total_seconds()
 			else:
@@ -60,15 +61,17 @@ class ServerDetailView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(ServerDetailView, self).get_context_data(**kwargs)
+
+		right_now = timezone.now()
 		num_players = self.get_object().numplayers_set.all().latest('query_time')
-		right_now = datetime.now()
-		if num_players:	
-			seconds = (right_now - num_players.query_time).total_seconds()
-		else:
+		
+		if not num_players:	
 			num_players = self.get_object().archivenumplayers_set.all().latest('query_time')
-			seconds = (right_now - num_players.query_time).total_seconds()			
+
+		seconds = (right_now - num_players.query_time).total_seconds()	
 		context['dt'] = int((seconds % 3600) // 60)
 		context['np'] = num_players.num_players
+
 		return context
 
 ######################################

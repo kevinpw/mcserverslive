@@ -5,8 +5,9 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'mcserverslive.settings'
 
 from mcserverslive.models import Server
 from mcstatus.minecraft_query import MinecraftQuery
-from datetime import datetime, timedelta
+from datetime import timedelta
 from django.db.models import Avg
+from django.utils import timezone
 
 from django.conf import settings
 minutes_to_archive = timedelta(minutes=settings.ARCHIVE_EVERY_MINUTES)
@@ -16,7 +17,7 @@ servers = Server.objects.all()
 for server in servers:
 
 	query = MinecraftQuery(server.ip, server.port)
-	right_now = datetime.now()
+	right_now = timezone.now()
 	time_since_last_archive = right_now - server.archivenumplayers_set.latest('query_time').query_time
 
 	numplayers_set = server.numplayers_set.all()
