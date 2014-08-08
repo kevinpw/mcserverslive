@@ -2,16 +2,18 @@
 <html  lang="en">
 
 {% load staticfiles %}
+{% load dajaxice_templatetags %}
 
 <head>
 
 	<meta charset="utf-8" />
 	<meta name="description" content="Minecraft Server List" />
-	<title>some website {% block title %}{% endblock %}</title>
+	<title>{{ domain }} {% block title %}{% endblock %}</title>
 	<link rel="icon" type="image/ico" href="{% static "images/favicon.ico" %}" />
 	<link rel="stylesheet" href="{% static "styles/main.css" %}" />
 
-	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../../excanvas.min.js"></script><![endif]-->
+	{% dajaxice_js_import %}
+	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot/excanvas.min.js"></script><![endif]-->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script language="javascript" type="text/javascript" src="{% static "js/flot/jquery.flot.js" %}"></script>
 	<script language="javascript" type="text/javascript" src="{% static "js/flot/jquery.flot.time.js" %}"></script>
