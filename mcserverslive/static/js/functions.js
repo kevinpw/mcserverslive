@@ -29,9 +29,9 @@ $(function() {
 		});
 	}		
 
-	Dajaxice.mcserverslive.get_data(makePlot, {'pk': 8 });
+	Dajaxice.mcserverslive.get_data(makePlot, {'pk': $("#pk").html() });
 
 	setInterval( function() {
-		Dajaxice.mcserverslive.get_data(makePlot, {'pk': 8 })
+		Dajaxice.mcserverslive.get_data(makePlot, {'pk': $("#pk").html() })
 		}, 20000 );
 });
