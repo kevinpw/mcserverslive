@@ -8,30 +8,4 @@ function textCounter(field, cnt, maxlimit) {
 	}
 }
 
-$(function() {
 
-	function makePlot(data) {
-		data = data.data;
-		d = [];
-		for(var i in data){
-			d.push([parseInt(i), data [i]]);
-		}
-		
-		console.log(d);
-		$.plot("#flot_time_series", [d], {
-			xaxis: { 
-				mode: "time" 
-			},
-			yaxis: {
-				min: 0,
-				max: 100
-			}
-		});
-	}		
-
-	Dajaxice.mcserverslive.get_data(makePlot, {'pk': $("#pk").html() });
-
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_data(makePlot, {'pk': $("#pk").html() })
-		}, 20000 );
-});
