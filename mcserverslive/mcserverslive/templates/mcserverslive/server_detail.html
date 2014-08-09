@@ -39,14 +39,14 @@
 				<img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" />
 			</td>
 			<td>
-				<table>
-					<tr><td style="padding-left: 50px;">Version: {{ server.version }}</td></tr>
-					<tr><td style="padding-left: 50px;">Ip: {{ server.ip }}</td></tr>
-					<tr><td style="padding-left: 50px;">Port: {{ server.port }}</td></tr>
-					<tr><td style="padding-left: 50px;">Game type: {{ server.game_type }}</td></tr>
-					<tr><td style="padding-left: 50px;">Max players: {{ server.max_players }}</td></tr>
-					<tr><td style="padding-left: 50px;">Num players: {{ np }}</td></tr>
-					<tr><td style="padding-left: 50px;">Last queried: {{ dt }} minutes ago</td></tr>
+				<table style="padding-left: 50px;">
+					<tr><td>Version: {{ server.version }}</td></tr>
+					<tr><td>Ip: {{ server.ip }}</td></tr>
+					<tr><td>Port: {{ server.port }}</td></tr>
+					<tr><td>Game type: {{ server.game_type }}</td></tr>
+					<tr><td>Max players: {{ server.max_players }}</td></tr>
+					<tr><td>Num players: {{ np }}</td></tr>
+					<tr><td>Last queried: {{ dt }} minutes ago</td></tr>
 				</table>
 			</td>
 		</tr>
@@ -129,7 +129,7 @@ $(function() {
 			},
 			yaxis: {
 				min: 0,
-				max: 100
+				max: 20
 			}
 		});
 	}		

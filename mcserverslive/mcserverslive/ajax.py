@@ -1,14 +1,16 @@
-import json, pytz
+import json
+import pytz
 from datetime import datetime
 from dajaxice.decorators import dajaxice_register
 
 from mcserverslive.models import Server
 
 def milli_since_epoch(dt):
-	epoch = pytz.utc.localize(datetime(1970,1,1))
-#	dt = pytz.utc.localize(dt)
-	delta = dt-epoch
-	delta_secs = (delta).total_seconds()
+	tz_local = pytz.timezone('US/Eastern')
+	dt = dt.astimezone(tz_local)
+	dt = dt.replace(tzinfo=None)
+	epoch = datetime(1970,1,1)
+	delta_secs = (dt - epoch).total_seconds()
 	return int(delta_secs*1000)
 
 @dajaxice_register
