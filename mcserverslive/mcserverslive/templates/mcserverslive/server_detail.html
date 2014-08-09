@@ -33,27 +33,29 @@
 
 		<h4>Current</h4>
 
-	<table style="padding-top: 50px;">
+	<table style="padding-top: 50px; width: 100%;">
 		<tr>
-			<td>
-				<img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" />
+			<td style="width: 40%; padding-right: 5px;">
+				<table>
+					<tr><td><img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" /></td></tr>
+					<tr><td id="motd"></td></tr>
+					{% if server.website %}
+						<tr><td>Website: <div id="website"></div></td></tr>
+					{% endif %}
+				</table>			
 			</td>
 			<td>
-				<table style="padding-left: 50px;">
-					<tr><td>Version</td><td id="version"></td></tr>
+				<table style="width: 100%;">
+					<tr style="background: #E8E8E8;"><td style="width: 150px;">Version</td><td id="version"></td></tr>
 					<tr><td>Ip</td><td>{{ server.ip }}</td></tr>
-					<tr><td>Port</td><td>{{ server.port }}</td></tr>
+					<tr style="background: #E8E8E8;"><td>Port</td><td>{{ server.port }}</td></tr>
 					<tr><td>Game type</td><td id="game_type"></td></tr>
-					<tr><td>Max players</td><td id="max_players"></td></tr>
+					<tr style="background: #E8E8E8;"><td>Max players</td><td id="max_players"></td></tr>
 					<tr><td>Num players</td><td id="num_players"></td></tr>
-					<tr><td>Last queried</td><td id="last_queried"></td></tr>
+					<tr style="background: #E8E8E8;"><td>Last queried</td><td id="last_queried"></td></tr>
 				</table>
 			</td>
 		</tr>
-		<tr><td>MOTD <div id="motd"></div></td></tr>
-		{% if server.website %}
-			<tr><td>Website: <div id="website"></div></td></tr>
-		{% endif %}
 	</table>
 
 	<h4>Description</h4>
