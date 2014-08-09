@@ -12,5 +12,5 @@ emails.txt
 
 static/
 !static/images/
-!statics/js/
+!static/js/
 !static/styles/
