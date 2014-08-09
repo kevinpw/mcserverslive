@@ -40,19 +40,19 @@
 			</td>
 			<td>
 				<table style="padding-left: 50px;">
-					<tr><td>Version: {{ server.version }}</td></tr>
-					<tr><td>Ip: {{ server.ip }}</td></tr>
-					<tr><td>Port: {{ server.port }}</td></tr>
-					<tr><td>Game type: {{ server.game_type }}</td></tr>
-					<tr><td>Max players: {{ server.max_players }}</td></tr>
-					<tr><td>Num players: {{ np }}</td></tr>
-					<tr><td>Last queried: {{ dt }} minutes ago</td></tr>
+					<tr><td>Version</td><td id="version"></td></tr>
+					<tr><td>Ip</td><td>{{ server.ip }}</td></tr>
+					<tr><td>Port</td><td>{{ server.port }}</td></tr>
+					<tr><td>Game type</td><td id="game_type"></td></tr>
+					<tr><td>Max players</td><td id="max_players"></td></tr>
+					<tr><td>Num players</td><td id="num_players"></td></tr>
+					<tr><td>Last queried</td><td id="last_queried"></td></tr>
 				</table>
 			</td>
 		</tr>
-		<tr><td>MOTD: {{ server.motd }}</td></tr>
+		<tr><td>MOTD <div id="motd"></div></td></tr>
 		{% if server.website %}
-			<tr><td>Website: {{ server.website }}</td></tr>
+			<tr><td>Website: <div id="website"></div></td></tr>
 		{% endif %}
 	</table>
 
@@ -115,30 +115,16 @@
 <script>
 $(function() {
 
-	function makePlot(data) {
-		data = data.data;
-		d = [];
-		for(var i in data){
-			d.push([parseInt(i), data [i]]);
-		}
-		
-		console.log(d);
-		$.plot("#flot_time_series", [d], {
-			xaxis: { 
-				mode: "time" 
-			},
-			yaxis: {
-				min: 0,
-				max: 20
-			}
-		});
-	}		
-
-	Dajaxice.mcserverslive.get_data(makePlot, {'pk': $("#pk").html() });
+	Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() });
+	Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': $("#pk").html() });
 
 	setInterval( function() {
-		Dajaxice.mcserverslive.get_data(makePlot, {'pk': $("#pk").html() })
+		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': $("#pk").html() })
 		}, 20000 );
+	setInterval( function() {
+		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() })
+		}, 10000 );
+
 });
 </script>
 

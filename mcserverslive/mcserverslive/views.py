@@ -59,21 +59,6 @@ class MyServerListView(ServerListView):
 class ServerDetailView(DetailView):
 	model = Server
 
-	def get_context_data(self, **kwargs):
-		context = super(ServerDetailView, self).get_context_data(**kwargs)
-
-		right_now = timezone.now()
-		num_players = self.get_object().numplayers_set.all().latest('query_time')
-		
-		if not num_players:	
-			num_players = self.get_object().archivenumplayers_set.all().latest('query_time')
-
-		seconds = (right_now - num_players.query_time).total_seconds()	
-		context['dt'] = int((seconds % 3600) // 60)
-		context['np'] = num_players.num_players
-
-		return context
-
 ######################################
 # Comment List View ##################
 ######################################
