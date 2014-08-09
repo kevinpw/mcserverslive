@@ -9,3 +9,8 @@ emails.txt
 *.png
 
 !mcserverslive/static/images/website_banner.png
+
+static/
+!static/images/
+!static/js/
+!static/styles/
