@@ -1,6 +1,7 @@
 from registration.forms import RegistrationFormUniqueEmail
 from captcha.fields import ReCaptchaField
 from django.forms import ValidationError, CharField, Select
+from django.contrib.auth.models import User
 
 from accounts.pytz_choices import PYTZ_CHOICES
 from accounts.models import UserProfile
@@ -26,5 +27,7 @@ class CustomRegistrationForm(RegistrationFormUniqueEmail):
 	def save(self, *args, **kwargs):
 		instance = super(CustomRegistrationForm, self).save(*args, **kwargs)
 		instance.save()
-		UserProfile(user=instance, timezone=self.cleaned_data['timezone']).save()
+		user = User.objects.get(email=instance.email)
+		profile = UserProfile(user=user, timezone=self.cleaned_data['timezone'], voted=False)
+		profile.save()
 		return instance
