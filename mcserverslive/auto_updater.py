@@ -33,8 +33,11 @@ for server in servers:
 
 		server.archivenumplayers_set.create(query_time=right_now, num_players=num_players, percent_up=percent_up)
 
-		for num_players in numplayers_set[-1]:
-			num_players.delete()
+		i = 0
+		n = len(numplayers_set)-1
+		while(i<n):
+			numplayers_set[i].delete()
+			i += 1
 
 	try:
 
