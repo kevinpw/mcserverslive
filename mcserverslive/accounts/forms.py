@@ -24,13 +24,3 @@ class CustomRegistrationForm(RegistrationFormUniqueEmail):
 		if not any(d.isnumeric() for d in data):
 			raise ValidationError(u'Passwords need to be at least 8 characters long and have at least one number and letter')					
 		return data
-
-	def save(self, *args, **kwargs):
-		instance = super(CustomRegistrationForm, self).save(*args, **kwargs)
-		instance.save()
-		user = User.objects.get(email=self.cleaned_data['email'])
-		userprofile = UserProfile(user=user, timezone=self.cleaned_data['timezone'], voted=False)
-		userprofile.save()
-		return instance
-
-

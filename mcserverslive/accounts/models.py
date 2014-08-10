@@ -11,3 +11,13 @@ class UserProfile(models.Model):
 	def __unicode__(self):
 		return unicode(self.user)
 
+from registration.signals import user_registered
+
+def user_registered_callback(sender, user, request, **kwargs):
+	profile = UserProfile(user=user)
+	profile.timezone = request.POST['timezone'])
+	profile.voted = False
+	profile.save()
+
+user_registered.connect(user_registered_callback)
+
