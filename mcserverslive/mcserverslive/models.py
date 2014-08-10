@@ -22,6 +22,7 @@ class Server(models.Model):
 	game_type = models.CharField(max_length = 10, null=True) # are these choices? origin?
 	website = models.URLField(blank=True)
 	description = models.CharField(max_length = 2000)
+	votes = models.PositiveSmallIntegerField(default=0)
 
 	class Meta:
 		unique_together = (('ip','port'),)
