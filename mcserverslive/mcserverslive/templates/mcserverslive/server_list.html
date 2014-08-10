@@ -24,17 +24,21 @@
 	{% if object_list %}
 		<ul>
 			{% for server, dt, np in object_tuples %}
+				<a href="{% url 'detail' server.pk %}">
 				<li>
 					<table>
 						<tr>
-							<td><a href="{% url 'detail' server.pk %}">{{ server.server_name }}</a></td>
 							<td>
-								<a href="{% url 'detail' server.pk %}">
-									<img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" />
-								</a>
-								<p>version: {{ server.version }}, ip: {{ server.ip }}, port: {{ server.port }}</p>
-								<p>{{ server.motd }}, {{ server.game_type }}</p>
-								<p>Last query: {{ dt }} minutes ago</p>
+								{{ server.server_name }}<br/><br/>
+								ip: {{ server.ip }}<br/>
+								port: {{ server.port }}<br/>
+								votes: {{ server.votes }}<br/>
+								Last query: {{ dt }} minutes ago
+							</td>
+							<td>
+								<img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" /><br/>
+								version: {{ server.version }}, Game Type: {{ server.game_type }}<br/><br/>
+								{{ server.motd }}
 							</td>
 							<td>
 								{% ifnotequal np None %}
@@ -43,16 +47,10 @@
 									offline
 								{% endifnotequal %}
 							</td>
-							<td>
-								{% ifequal server.user request.user %}
-									<div id="edit_button">
-										<a href="{% url 'update' server.pk %}">Edit</a>
-									</div>
-								{% endifequal %}
-							</td>
 						</tr>
 					</table>
 				</li>
+				</a>
 			{% endfor %}
 		</ul>
 		
