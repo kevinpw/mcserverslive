@@ -35,7 +35,7 @@ nav a:hover { display: block; width: 120px; text-align: center; text-decoration:
 footer { margin: 30px auto; width: 800px; box-shadow: 10px 10px 5px #888888; border-radius: 15px; background: white; height: 50px; }
 footer p { padding: 20px 5px; font-size: 70%; }
 
-.pagination { float: right; padding: 10px; }
+.pagination { float: right; padding: 10px; font-size: 80%; }
 .padding_50px { padding: 50px; }
 
 #banner { margin-top: 5px; border: 1px solid black; }
