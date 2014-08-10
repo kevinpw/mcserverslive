@@ -28,5 +28,5 @@ class CustomRegistrationForm(RegistrationFormUniqueEmail):
 		if commit:
 			instance.save()
 		user = User.objects.get(email=instance.email)
-		instance.userprofile_set.create(user=user, timezone=instance.timezone, voted = False)
+		user.userprofile_set.create(timezone=self.cleaned_data['timezone'])
 		return instance
