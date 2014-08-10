@@ -1,10 +1,10 @@
 {% url 'registration_activate' activation_key as activation_key_url %}
 
-You (or someone pretending to be you) has asked to register an account at {{ domain }}. If this wasn't you, please ignore this email and your address will be removed from our records.
+You (or someone pretending to be you) has asked to register an account at mcserverslive.com. If this wasn't you, please ignore this email and your address will be removed from our records.
 
 To activate this account, please click the following link within the next 7 days:
 
-http://www.somewebsite.com/{{ activation_key_url }}
+http://www.mcserverslive.com/{{ activation_key_url }}
 
 Sincerely,
-{{ domain }}
+Folks at mcserverslive.com

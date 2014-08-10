@@ -1,1 +1,1 @@
-Account registration for {{ domain }}
+Account registration for mcserverslive.com
