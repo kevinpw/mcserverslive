@@ -58,7 +58,7 @@ USE_TZ = True
 # import local_settings
 from local_settings import *
 
-# global template context
+# append some default settings
 import django.conf.global_settings as DEFAULT_SETTINGS
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
 	"django.core.context_processors.request",
