@@ -15,7 +15,7 @@ from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):
 	profile = UserProfile(user=user)
-	profile.timezone = request.POST['timezone'])
+	profile.timezone = request.POST['timezone']
 	profile.voted = False
 	profile.save()
 
