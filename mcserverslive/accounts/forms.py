@@ -27,7 +27,7 @@ class CustomRegistrationForm(RegistrationFormUniqueEmail):
 	def save(self, *args, **kwargs):
 		instance = super(CustomRegistrationForm, self).save(*args, **kwargs)
 		instance.save()
-		user = User.objects.get(email=instance.email)
+		user = User.objects.get(email=self.cleaned_data['email'])
 		profile = UserProfile(user=user, timezone=self.cleaned_data['timezone'], voted=False)
 		profile.save()
 		return instance
