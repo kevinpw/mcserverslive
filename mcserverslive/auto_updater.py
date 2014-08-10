@@ -20,26 +20,21 @@ for server in servers:
 	right_now = timezone.now()
 	time_since_last_archive = right_now - server.archivenumplayers_set.latest('query_time').query_time
 
-	numplayers_set = server.numplayers_set.all()
 	if time_since_last_archive > minutes_to_archive:
+		numplayers_set = server.numplayers_set.all()
 		num_players = numplayers_set.aggregate(Avg('num_players'))['num_players__avg']
 		count_tot = len(numplayers_set)
 		count_not_null = len([ np for np in numplayers_set if np.num_players != None ])
-		if count_tot:
+
+		if count_not_null:
 			percent_up = int(float(count_not_null)/count_tot*100)
 		else:
-			percent_up = None
+			percent_up = 0
+
 		server.archivenumplayers_set.create(query_time=right_now, num_players=num_players, percent_up=percent_up)
 
-		for num_players in numplayers_set:
+		for num_players in numplayers_set[-1]:
 			num_players.delete()
-
-#		archives = server.archivenumplayers_set.all()
-#		dates = [ a.query_time for a in archives ]
-#		num_players = [ a.num_players for a in archives ]
-#		percent_up = [ a.percent_up for a in archives ]
-#		outfile = str(server.ip)+ '_' + str(server.port) + '.png'
-#		graph_gen(dates=dates, num_players=num_players, percent_up=percent_up, outfile=outfile)
 
 	try:
 
