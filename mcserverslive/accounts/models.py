@@ -8,3 +8,6 @@ class UserProfile(models.Model):
 	timezone = models.CharField(max_length = 32, choices=PYTZ_CHOICES)
 	voted = models.BooleanField(default=False)
 
+	def __unicode__(self):
+		return unicode(self.user)
+
