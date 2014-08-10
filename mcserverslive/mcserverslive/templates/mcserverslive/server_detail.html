@@ -8,27 +8,37 @@
 
 {% block content %}
 <div>
+	<div id="pk" class="display_none">{{ server.pk }}</div>
+	<div id="user_pk" class="display_none">{{ request.user.pk }}</div>
 	<table style="width: 100%;">
 		<tr>
 			<td><h3>{{ server.server_name }}</h3></td>
 			<td>
-				{% ifequal server.user request.user %}
-					<div id="delete_button">
-						<a href="{% url 'delete' server.pk %}">DELETE</a>
+				{% if user.is_authenticated %}
+					<div id="vote_message" style="float: right;">
+						<div id="vote_button"><a onclick="Dajaxice.mcserverslive.vote(vote_result,{'user_pk': $('#user_pk').html(), 'pk': $('#pk').html() });">Vote for it!</a></div>
 					</div>
-					<div id="edit_button">
-						<a href="{% url 'update' server.pk %}">Edit</a>
-					</div>
-				{% endifequal %}
+				{% else %}
+					<p style="float: right;">Login to vote for this server!</p>
+				{% endif %}
 			</td>
 		</tr>
-	</table>
+	</table><br/><br/>
+
+	{% ifequal server.user request.user %}
+		<div id="delete_button">
+			<a href="{% url 'delete' server.pk %}">DELETE</a>
+		</div>
+		<div id="edit_button">
+			<a href="{% url 'update' server.pk %}">Edit</a>
+		</div>
+	{% endifequal %}
+
 
 		<h4>History</h4>
-		<div id="pk" class="display_none">{{ server.pk }}</div>
 		<h5>Number of Players over Time</h5>
-		<div class="flot_ts_container">
-			<div id="flot_time_series" class="flot_ts_div"></div>
+		<div class="flot_shell">
+			<div id="flot_time_series" class="flot_time_series"></div>
 		</div>
 
 		<h4>Current</h4>
@@ -52,7 +62,8 @@
 					<tr><td>Game type</td><td id="game_type"></td></tr>
 					<tr style="background: #E8E8E8;"><td>Max players</td><td id="max_players"></td></tr>
 					<tr><td>Num players</td><td id="num_players"></td></tr>
-					<tr style="background: #E8E8E8;"><td>Last queried</td><td id="last_queried"></td></tr>
+					<tr style="background: #E8E8E8;"><td>Votes</td><td id="votes"></td></tr>
+					<tr><td>Last queried</td><td id="last_queried"></td></tr>
 				</table>
 			</td>
 		</tr>
@@ -123,6 +134,7 @@ $(function() {
 	setInterval( function() {
 		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': $("#pk").html() })
 		}, 20000 );
+
 	setInterval( function() {
 		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() })
 		}, 10000 );

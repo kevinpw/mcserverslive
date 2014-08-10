@@ -17,6 +17,7 @@ function updateText(data) {
 	$("#num_players").html(data['numplayers']);
 	$("#motd").html(data['motd']);
 	$("#website").html(data['website']);
+	$("#votes").html(data['votes']);
 	$("#last_queried").html(data['last_queried']);
 }
 
@@ -37,14 +38,16 @@ function makePlot(data) {
 	data = data.data;
 	var d = [];
 
-	plot(d, $("#max_players").html());
-
 	for(var i in data){
 		d.push([parseInt(i), data [i]]);
 	}
 
 	plot(d, $("#max_players").html());
 
+}
+
+function vote_result(data) {
+	$("#vote_message").html(data.data);
 }
 
 
