@@ -11,3 +11,4 @@ from accounts.forms import CustomRegistrationForm
 class CustomRegistrationView(RegistrationView):
 	template_name = 'registration/registration_form.html'
 	form_class = CustomRegistrationForm
+

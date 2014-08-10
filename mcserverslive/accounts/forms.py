@@ -2,8 +2,8 @@ from registration.forms import RegistrationFormUniqueEmail
 from captcha.fields import ReCaptchaField
 from django.forms import ValidationError, CharField, Select
 
-from accounts.models import UserProfile
 from accounts.pytz_choices import PYTZ_CHOICES
+from accounts.models import UserProfile
 
 class CustomRegistrationForm(RegistrationFormUniqueEmail):
 	captcha = ReCaptchaField(attrs={'theme':'clean'})
@@ -23,10 +23,8 @@ class CustomRegistrationForm(RegistrationFormUniqueEmail):
 			raise ValidationError(u'Passwords need to be at least 8 characters long and have at least one number and letter')					
 		return data
 
-	def save(self, commit=True):
-		instance = super(CustomRegistrationForm, self).save(commit=False)
-		if commit:
-			instance.save()
-		user = User.objects.get(email=self.cleaned_data['email'])
-		user.userprofile_set.create(timezone=self.cleaned_data['timezone'])
+	def save(self, *args, **kwargs):
+		instance = super(CustomRegistrationForm, self).save(*args, **kwargs)
+		instance.save()
+		UserProfile(user=instance, timezone=self.cleaned_data['timezone']).save()
 		return instance
