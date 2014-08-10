@@ -18,26 +18,33 @@ function updateText(data) {
 	$("#motd").html(data['motd']);
 	$("#website").html(data['website']);
 	$("#last_queried").html(data['last_queried']);
-}	
+}
 
-function makePlot(data) {
-
-	data = data.data;
-	d = [];
-
-	for(var i in data){
-		d.push([parseInt(i), data [i]]);
-	}
-
+function plot(d, ymax) {
 	$.plot("#flot_time_series", [d], {
 		xaxis: { 
 			mode: "time" 
 		},
 		yaxis: {
 			min: 0,
-			max: 20
+			max: ymax
 		}
 	});
+}	
+
+function makePlot(data) {
+
+	data = data.data;
+	var d = [];
+
+	plot(d, $("#max_players").html());
+
+	for(var i in data){
+		d.push([parseInt(i), data [i]]);
+	}
+
+	plot(d, $("#max_players").html());
+
 }
 
 
