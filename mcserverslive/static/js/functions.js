@@ -22,30 +22,43 @@ function updateText(data) {
 	$("#plugins").html(data['plugins']);
 }
 
-function plot(id, d, ymax) {
-	$.plot(id, [d], {
+function Plot(flot_id, d, ymin, ymax) {
+
+	var options = {
+
 		xaxis: { 
 			mode: "time",
+			twelveHourClock: true,
 		},
 		yaxis: {
-			min: 0,
+			min: ymin,
 			max: ymax
 		}
-	});
-}	
+
+	}
+
+	var plot = $.plot(flot_id, [d], options);
+	return plot
+
+}
 
 function makePlot(data) {
-
-	data = data.data;
+	
+	var flot_id = data.flot_id;
+	var ymax = $(data.ymax_id).html();
+	var ymin = -1*(ymax/4);
+	var data = data.data;	
 	var d = [];
 
-	plot("#flot_num_players", d, $("#max_players").html());
-
 	for(var i in data){
+		if(data[i] == null) data[i] = ymin;
 		d.push([parseInt(i), data [i]]);
 	}
 
-	plot("#flot_num_players", d, $("#max_players").html());
+	d.sort(function(a,b){return a[0]-b[0]});
+
+	var plot = Plot(flot_id, d, ymin, ymax);
+	plot.draw();
 
 }
 

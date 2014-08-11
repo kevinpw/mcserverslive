@@ -8,8 +8,10 @@
 
 {% block content %}
 <div>
+
 	<div id="pk" class="display_none">{{ server.pk }}</div>
 	<div id="user_pk" class="display_none">{{ request.user.pk }}</div>
+
 	<table style="width: 100%;">
 		<tr>
 			<td><h3>{{ server.server_name }}</h3></td>
@@ -35,18 +37,11 @@
 	{% endifequal %}
 
 
-		<h4>History</h4>
-		<h5>Number of Players over Time</h5>
-		<div class="flot_shell">
-			<div id="flot_num_players" class="flot_time_series"></div>
-		</div>
-
-{% comment %}
-		<h5>Percent Up over Time</h5>
-		<div class="flot_shell">
-			<div id="flot_percent_up" class="flot_time_series"></div>
-		</div>
-{% endcomment %}
+	<h4>History</h4>
+	<h5>Number of Players over Time</h5>
+	<div id="flot_shell" class="flot_shell">
+		<div id="flot_num_players" class="flot_plot"></div>
+	</div>
 
 		<h4>Current</h4>
 
@@ -119,16 +114,24 @@
 <script>
 $(function() {
 
-	Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() });
-	Dajaxice.mcserverslive.get_plot_data(makePlot, {'plot': 'num_players', 'pk': $("#pk").html() });
+	// var assignments
+	var pk = $("#pk").html();
+	var flot_id = "#flot_num_players";
+	var ymax_id = "#max_players";
 
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_plot_data(makePlot, {'plot': 'num_players', 'pk': $("#pk").html() })
-		}, 20000 );
+	// onload current data	
+	Dajaxice.mcserverslive.get_text_data(updateText, {'pk': pk });
 
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() })
-		}, 10000 );
+	// onload create plot
+	Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id} );
+
+//	setInterval( function() {
+//		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax': ymax})
+//		}, 10000 );
+
+//	setInterval( function() {
+//		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() })
+//		}, 10000 );
 
 
 });

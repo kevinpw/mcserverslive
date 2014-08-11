@@ -1,5 +1,4 @@
-import json
-import pytz
+import json, pytz
 from datetime import datetime
 from dajaxice.decorators import dajaxice_register
 from django.utils import timezone
@@ -8,6 +7,10 @@ from django.shortcuts import get_object_or_404
 from mcserverslive.models import Server
 from accounts.models import UserProfile
 from django.conf import settings
+
+#######################
+# Get plot data #######
+#######################
 
 def milli_since_epoch(dt):
 	tz_local = pytz.timezone('US/Eastern')
@@ -18,12 +21,16 @@ def milli_since_epoch(dt):
 	return int(delta_secs*1000)
 
 @dajaxice_register
-def get_plot_data(request, plot, pk):
+def get_plot_data(request, pk, flot_id, ymax_id):
 
-	data = Server.objects.get(pk=pk).archivenumplayers_set.all()
+	data = Server.objects.get(pk=pk).archivenumplayers_set.all().order_by('query_time')
 	data = { milli_since_epoch(d.query_time): d.num_players for d in data }
 	
-	return json.dumps({'data': data})
+	return json.dumps({'data': data, 'flot_id': flot_id, 'ymax_id': ymax_id})
+
+############################
+# Get current info #########
+############################
 
 @dajaxice_register
 def get_text_data(request, pk):
@@ -61,6 +68,10 @@ def get_text_data(request, pk):
 	data['last_queried'] = '{0} minute{1} ago'.format(last_queried,s) 
 
 	return json.dumps({'data': data})
+
+############################
+# Vote up a server #########
+############################
 
 @dajaxice_register
 def vote(request, user_pk, pk):
