@@ -94,14 +94,6 @@ class ServerCommentForm(ModelForm):
 	class Meta:
 		model = ServerComment
 		fields = ['comment']
-
-	def clean_comment(self):
-		data = self.cleaned_data['comment']
-		words = data.split()
-		for word in words:
-			if len(word)>50:
-				raise ValidationError(u'No words longer than 50 letters please')
-		return data
 			
 	def save(self, commit=True):
 		instance = super(ServerCommentForm, self).save(commit=False)
