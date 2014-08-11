@@ -125,13 +125,14 @@ $(function() {
 	// onload create plot
 	Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id} );
 
-//	setInterval( function() {
-//		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax': ymax})
-//		}, 10000 );
+	// update on intervals
+	setInterval( function() {
+		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax': ymax})
+		}, 20000 );
 
-//	setInterval( function() {
-//		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() })
-//		}, 10000 );
+	setInterval( function() {
+		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': pk })
+		}, 10000 );
 
 
 });
