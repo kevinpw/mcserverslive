@@ -49,7 +49,7 @@ def get_text_data(request, pk):
 	data['plugins'] = plugins
 
 	num_players = server.numplayers_set.latest('query_time')
-	if num_players.num_players:
+	if num_players.num_players != None:
 		data['numplayers'] = num_players.num_players
 	else:
 		data['numplayers'] = 'offline'
