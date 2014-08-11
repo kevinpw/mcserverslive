@@ -97,8 +97,7 @@ class ServerCommentForm(ModelForm):
 
 	def clean_comment(self):
 		data = self.cleaned_data['comment']
-		words = data
-		words.split()
+		words = data.split()
 		for word in words:
 			if len(word)>50:
 				raise ValidationError(u'No words longer than 50 letters please')
