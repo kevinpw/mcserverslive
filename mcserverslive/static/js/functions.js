@@ -26,6 +26,9 @@ function Plot(flot_id, d, ymin, ymax) {
 
 	var options = {
 
+		series: {
+			lines: { show: true, fill: true }
+		},
 		xaxis: { 
 			mode: "time",
 			twelveHourClock: true,
