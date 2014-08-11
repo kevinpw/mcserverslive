@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 
 from mcserverslive.models import Server
 from accounts.models import UserProfile
+from django.conf import settings
 
 def milli_since_epoch(dt):
 	tz_local = pytz.timezone('US/Eastern')
@@ -28,13 +29,26 @@ def get_plot_data(request, pk):
 def get_text_data(request, pk):
 
 	server = Server.objects.get(pk=pk)
-	num_players = server.numplayers_set.latest('query_time')
-	plugins = server.plugin_set.all()
-	# banner ?
 	data = {}
+
+	data['banner'] = settings.MEDIA_URL + str(server.banner)
 	data['version'] = server.version
 	data['game_type'] = server.game_type
 	data['max_players'] = server.max_players
+	data['motd'] = server.motd
+	data['website']	= server.website
+	data['votes'] = server.votes
+
+	plugins = ''
+	if server.plugin_set.all():
+		for plugin in server.plugin_set.all():
+			plugins = plugins + plugin.plugin + ' '
+	else:
+		plugins = 'Vanilla server. No plugins'
+
+	data['plugins'] = plugins
+
+	num_players = server.numplayers_set.latest('query_time')
 	data['numplayers'] = num_players.num_players
 	last_queried = int((timezone.now() - num_players.query_time).total_seconds() // 60)
 	if last_queried == 1:
@@ -42,10 +56,6 @@ def get_text_data(request, pk):
 	else:
 		s = 's'
 	data['last_queried'] = '{0} minute{1} ago'.format(last_queried,s) 
-	data['motd'] = server.motd
-	data['website']	= server.website
-	data['votes'] = server.votes
-
 
 	return json.dumps({'data': data})
 

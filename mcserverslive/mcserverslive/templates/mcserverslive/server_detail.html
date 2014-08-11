@@ -47,7 +47,7 @@
 		<tr>
 			<td style="width: 40%; padding-right: 5px;">
 				<table>
-					<tr><td><img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" /></td></tr>
+					<tr><td><img id="banner" src="" /></td></tr>
 					<tr><td id="motd"></td></tr>
 					{% if server.website %}
 						<tr><td>Website: <div id="website"></div></td></tr>
@@ -70,28 +70,12 @@
 	</table>
 
 	<h4>Description</h4>
-		<p>{{ server.description }}</p>
+		{{ server.description }}
 
 	<h4>Plugins</h4>
-		{% if server.plugin_set.all %}
-			{% for plugin in server.plugin_set.all %}
-				{% ifequal forloop.counter 1 %}
-					{% if forloop.last %}
-						{{ plugin }}
-					{% else %}
-						{{ plugin }},
-					{% endif %}
-				{% else %}
-					{% if forloop.last %}
-						{{ plugin }}
-					{% else %}
-						{{ plugin }},
-					{% endif %}
-				{% endifequal %}
-			{% endfor %}
-		{% else %}
-				<p>Vanilla server. No plugins</p>
-		{% endif %}
+		<table>
+			<tr><td id="plugins"></td></tr>
+		</table>			
 
 	<table style="width:100%;">
 		<tr>

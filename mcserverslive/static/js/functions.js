@@ -10,7 +10,7 @@ function textCounter(field, cnt, maxlimit) {
 
 function updateText(data) {
 	data = data.data
-//	$("#banner").attr('src'):{{ server.banner }}
+	$("#banner").attr( 'src',data['banner']);
 	$("#version").html(data['version']);
 	$("#game_type").html(data['game_type']);
 	$("#max_players").html(data['max_players']);
@@ -19,6 +19,7 @@ function updateText(data) {
 	$("#website").html(data['website']);
 	$("#votes").html(data['votes']);
 	$("#last_queried").html(data['last_queried']);
+	$("#plugins").html(data['plugins']);
 }
 
 function plot(d, ymax) {
