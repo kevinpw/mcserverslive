@@ -94,6 +94,16 @@ class ServerCommentForm(ModelForm):
 	class Meta:
 		model = ServerComment
 		fields = ['comment']
+		widgets = { 'comment': Textarea(attrs={ 'style': 'resize: none;',
+			'cols': 50, 'rows': 4,'onKeyUp': "textCounter(this,'counter_description',300);"}), }
+
+	def clean_comment(self):
+		data = self.cleaned_data['comment']
+		words = data.split()
+		for word in words:
+			if len(word) > 60:
+				raise ValidationError(u'No words more than 60 characters')
+		return data
 			
 	def save(self, commit=True):
 		instance = super(ServerCommentForm, self).save(commit=False)

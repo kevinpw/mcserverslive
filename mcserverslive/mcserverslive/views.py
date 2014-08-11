@@ -2,9 +2,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.forms import ValidationError
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 
 from datetime import timedelta
 import random
@@ -59,6 +60,11 @@ class MyServerListView(ServerListView):
 class ServerDetailView(DetailView):
 	model = Server
 
+	def get_context_data(self, **kwargs):
+		context = super(ServerDetailView, self).get_context_data(**kwargs)
+		context['form'] = ServerCommentForm
+		return context
+
 ######################################
 # Comment List View ##################
 ######################################
@@ -77,6 +83,7 @@ class ServerCommentView(ListView):
 
 class ServerCommentSubmitView(CreateView):
 	form_class = ServerCommentForm
+	template_name = 'mcserverslive/server_detail.html'
 	success_url = '/'
 
 	@method_decorator(login_required)
@@ -109,6 +116,7 @@ class ServerCreateView(CreateView):
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		return super(ServerCreateView, self).form_valid(form)
+
 
 ##################################
 # Update a Server Listing ########

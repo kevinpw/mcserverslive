@@ -98,11 +98,15 @@
 	{% if user.is_authenticated %}
 	<h4>Post a new comment<h4>
 		<form method="post" action="{% url 'post_comment' server.pk %}">{% csrf_token %}
-			<table>
-				<tr><td><label for="id_comment">Comment</label></td></tr>
-				<tr><td><div id="counter_description">Maximum characters: 300</div></td></tr>
-				<tr><td><textarea style="resize: none;" rows="4" cols="50" name="comment", onKeyUp="textCounter(this,'counter_description',300);"></textarea></td></tr>
-				<tr><td><input type="submit" value="Post" /></td></tr>
+		<table>
+			{{ form.non_field_errors }}
+			<tr><td>{{ form.comment.errors }}</td></tr>
+			<tr><td><div id="counter_description">Maximum characters: 300</div></td></tr>
+			<tr>
+				
+				<td>{{ form.comment }}</td>
+			</tr>
+			<tr><td><input type="submit" value="Post" /></td></tr>
 			</table>
 		</form>
 	{% else %}
@@ -128,12 +132,12 @@ $(function() {
 	// update on intervals
 	setInterval( function() {
 		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id})
-		}, 20000 );
-
+		}, 20000 
+	);
 	setInterval( function() {
 		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': pk })
-		}, 10000 );
-
+		}, 10000 
+	);
 
 });
 </script>
