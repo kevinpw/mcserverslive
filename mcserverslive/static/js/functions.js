@@ -22,10 +22,10 @@ function updateText(data) {
 	$("#plugins").html(data['plugins']);
 }
 
-function plot(d, ymax) {
-	$.plot("#flot_time_series", [d], {
+function plot(id, d, ymax) {
+	$.plot(id, [d], {
 		xaxis: { 
-			mode: "time" 
+			mode: "time",
 		},
 		yaxis: {
 			min: 0,
@@ -39,11 +39,13 @@ function makePlot(data) {
 	data = data.data;
 	var d = [];
 
+	plot("#flot_num_players", d, $("#max_players").html());
+
 	for(var i in data){
 		d.push([parseInt(i), data [i]]);
 	}
 
-	plot(d, $("#max_players").html());
+	plot("#flot_num_players", d, $("#max_players").html());
 
 }
 

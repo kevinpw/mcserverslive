@@ -38,8 +38,15 @@
 		<h4>History</h4>
 		<h5>Number of Players over Time</h5>
 		<div class="flot_shell">
-			<div id="flot_time_series" class="flot_time_series"></div>
+			<div id="flot_num_players" class="flot_time_series"></div>
 		</div>
+
+{% comment %}
+		<h5>Percent Up over Time</h5>
+		<div class="flot_shell">
+			<div id="flot_percent_up" class="flot_time_series"></div>
+		</div>
+{% endcomment %}
 
 		<h4>Current</h4>
 
@@ -113,10 +120,10 @@
 $(function() {
 
 	Dajaxice.mcserverslive.get_text_data(updateText, {'pk': $("#pk").html() });
-	Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': $("#pk").html() });
+	Dajaxice.mcserverslive.get_plot_data(makePlot, {'plot': 'num_players', 'pk': $("#pk").html() });
 
 	setInterval( function() {
-		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': $("#pk").html() })
+		Dajaxice.mcserverslive.get_plot_data(makePlot, {'plot': 'num_players', 'pk': $("#pk").html() })
 		}, 20000 );
 
 	setInterval( function() {

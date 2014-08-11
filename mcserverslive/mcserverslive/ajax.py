@@ -18,7 +18,7 @@ def milli_since_epoch(dt):
 	return int(delta_secs*1000)
 
 @dajaxice_register
-def get_plot_data(request, pk):
+def get_plot_data(request, plot, pk):
 
 	data = Server.objects.get(pk=pk).archivenumplayers_set.all()
 	data = { milli_since_epoch(d.query_time): d.num_players for d in data }
@@ -44,12 +44,15 @@ def get_text_data(request, pk):
 		for plugin in server.plugin_set.all():
 			plugins = plugins + plugin.plugin + ' '
 	else:
-		plugins = 'Vanilla server. No plugins'
+		plugins = 'Vanilla server. No plugins.'
 
 	data['plugins'] = plugins
 
 	num_players = server.numplayers_set.latest('query_time')
-	data['numplayers'] = num_players.num_players
+	if num_players.num_players:
+		data['numplayers'] = num_players.num_players
+	else:
+		data['numplayers'] = 'offline'
 	last_queried = int((timezone.now() - num_players.query_time).total_seconds() // 60)
 	if last_queried == 1:
 		s = ''
