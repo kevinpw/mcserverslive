@@ -75,7 +75,7 @@ class ServerCreateForm(ModelForm):
 		right_now = timezone.now()
 		num_players=self.full_status['numplayers']
 		instance.numplayers_set.create(query_time = right_now, num_players = num_players)
-		instance.archivenumplayers_set.create(query_time = right_now, num_players = num_players, percent_up=100)	
+		instance.archivenumplayers_set.create(query_time = right_now, num_players = num_players)	
 
 		plugins = self.full_status['plugins']
 		

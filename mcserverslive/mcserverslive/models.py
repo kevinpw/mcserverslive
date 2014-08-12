@@ -64,7 +64,6 @@ class ArchiveNumPlayers(models.Model):
 	server = models.ForeignKey(Server)
 	query_time = models.DateTimeField()
 	num_players = models.PositiveSmallIntegerField(null=True)
-	percent_up = models.PositiveSmallIntegerField(null=True)
 
 	def __unicode__(self):
 		return unicode(self.query_time)
