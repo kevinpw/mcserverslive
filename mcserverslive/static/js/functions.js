@@ -9,19 +9,32 @@ function textCounter(field, cnt, maxlimit) {
 	}
 }
 
-// updating current info
-function updateText(data) {
-	data = data.data
-	$("#banner").attr( 'src',data['banner']);
-	$("#version").html(data['version']);
-	$("#game_type").html(data['game_type']);
-	$("#max_players").html(data['max_players']);
-	$("#num_players").html(data['numplayers']);
-	$("#motd").html(data['motd']);
-	$("#website").html(data['website']);
-	$("#votes").html(data['votes']);
-	$("#last_queried").html(data['last_queried']);
-	$("#plugins").html(data['plugins']);
+// remove duplicates from array
+function ArrayUnique(arr) {
+	var temp = {};
+	for(var i=0; i<arr.length; i++)
+		temp[arr[i]] = true;
+	var uniq_arr = [];
+	for(var j in temp)
+		uniq_arr.push(j);
+	return uniq_arr;
+}
+
+// update current info
+function getCurrentData(data) {
+	var variables = data.variables;
+	var servers = data.data;	
+	var id = '';
+	for(server in servers) {
+		for(var i=0; i<variables.length; i++) {
+			id = "#"+server+"__"+variables[i];
+			if(variables[i] != 'banner') {
+				$(id).html(servers[server][variables[i]]);
+			} else {
+				$(id).attr('src',servers[server][variables[i]]);
+			}
+		}
+	}
 }
 
 // flot

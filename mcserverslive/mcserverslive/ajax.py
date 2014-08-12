@@ -32,34 +32,22 @@ def get_plot_data(request, pk, flot_id, ymax_id):
 # Get current info #########
 ############################
 
-@dajaxice_register
-def get_text_data(request, pk):
+def get_server_data(server, variables):
 
-	server = Server.objects.get(pk=pk)
 	data = {}
-
+	data['server_name'] = server.server_name
 	data['banner'] = settings.MEDIA_URL + str(server.banner)
 	data['version'] = server.version
 	data['game_type'] = server.game_type
 	data['max_players'] = server.max_players
 	data['motd'] = server.motd
-	data['website']	= server.website
 	data['votes'] = server.votes
-
-	plugins = ''
-	if server.plugin_set.all():
-		for plugin in server.plugin_set.all():
-			plugins = plugins + plugin.plugin + ' '
-	else:
-		plugins = 'Vanilla server. No plugins.'
-
-	data['plugins'] = plugins
 
 	num_players = server.numplayers_set.latest('query_time')
 	if num_players.num_players != None:
-		data['numplayers'] = num_players.num_players
+		data['num_players'] = num_players.num_players
 	else:
-		data['numplayers'] = 'offline'
+		data['num_players'] = 'offline'
 	last_queried = int((timezone.now() - num_players.query_time).total_seconds() // 60)
 	if last_queried == 1:
 		s = ''
@@ -67,7 +55,30 @@ def get_text_data(request, pk):
 		s = 's'
 	data['last_queried'] = '{0} minute{1} ago'.format(last_queried,s) 
 
-	return json.dumps({'data': data})
+	if 'website' in variables:
+		data['website']	= server.website
+	if 'plugins' in variables:
+		plugins = ''
+		if server.plugin_set.all():
+			for plugin in server.plugin_set.all():
+				plugins = plugins + plugin.plugin + ' '
+		else:
+			plugins = 'Vanilla server. No plugins.'
+	
+		data['plugins'] = plugins
+
+	return data
+
+@dajaxice_register
+def get_current_data(request, servers, variables):
+
+	data = {}
+	servers = Server.objects.filter(pk__in=servers)
+	for server in servers:
+		data[server.pk] = get_server_data(server, variables)
+	
+	return json.dumps({'data': data, 'variables': variables})
+
 
 ############################
 # Vote up a server #########

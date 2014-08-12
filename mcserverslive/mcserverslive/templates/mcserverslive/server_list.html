@@ -23,34 +23,43 @@
 <div id="server_list">
 	{% if object_list %}
 		<ul>
-			{% for server, dt, np in object_tuples %}
+			{% for server in object_list %}
+
+				{% with pk=server.pk %}
+
 				<a href="{% url 'detail' server.pk %}">
 				<li>
 					<table>
 						<tr>
 							<td>
-								{{ server.server_name }}<br/><br/>
-								ip: {{ server.ip }}<br/>
-								port: {{ server.port }}<br/>
-								votes: {{ server.votes }}<br/>
-								Last query: {{ dt }} minutes ago
+								<div id="{{ pk }}__server_name" class="current_data"></div><br/>
+								<div id="server_ip">ip: {{ server.ip }}</div>
+								<div id="server_port">port: {{ server.port }}</div>
+								<div style="float: left; padding: 0 5px 0 0;">votes:</div><div id="{{ pk }}__votes" class="current_data"></div>
+								<div style="float: left; padding: 0 5px 0 0;">Last queried:</div><div id="{{ pk }}__last_queried" class="current_data"></div>
 							</td>
 							<td>
-								<img id="banner" src="{{ MEDIA_URL }}{{ server.banner }}" /><br/>
-								version: {{ server.version }}, Game Type: {{ server.game_type }}<br/><br/>
-								{{ server.motd }}
+								<div id="server_banner">
+									<img id="{{ pk }}__banner" class="current_data" src="" /><br/>
+								</div>
+								<div style="float: left; padding: 0 5px 0 0;">Version: </div> 
+								<div id="{{ pk }}__version" class="current_data" style="float: left; padding: 0 5px 0 0;"></div>
+								<div style="float:left; padding: 0 5px 0 0;">, Game Type:</div> 
+								<div id="{{ pk }}__game_type" class="current_data"></div><br/>
+								<div id="{{ pk }}__motd" class="current_data"></div>
 							</td>
 							<td>
-								{% ifnotequal np None %}
-									{{ np }}/{{ server.max_players }}
-								{% else %}
-									offline
-								{% endifnotequal %}
+								<div id="{{ pk }}__num_players" class="current_data" style="float: left;"></div>
+								<div style="float: left;">/</div>
+								<div id="{{ pk }}__max_players"class="current_data" ></div>
 							</td>
 						</tr>
 					</table>
 				</li>
 				</a>
+		
+				{% endwith %}
+
 			{% endfor %}
 		</ul>
 		
@@ -61,4 +70,32 @@
 	{% endif %}
 
 </div>
+
+<script>
+$(function() {
+
+	// var assignments
+	var variables = [];
+	var servers = [];
+	var pair = [];
+	$(".current_data").each(function(){
+		pair = $(this).attr('id').split("__");
+		servers.push(pair[0]);
+		variables.push(pair[1]);
+	});
+	servers = ArrayUnique(servers);
+	variables = ArrayUnique(variables);
+
+	// onload
+	Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables });
+
+	// update on intervals
+	setInterval( function() {
+		Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables })
+		}, 20000 
+	);
+
+});
+</script>
+
 {% endblock %}

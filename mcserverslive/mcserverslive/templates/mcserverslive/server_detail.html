@@ -12,9 +12,11 @@
 	<div id="pk" class="display_none">{{ server.pk }}</div>
 	<div id="user_pk" class="display_none">{{ request.user.pk }}</div>
 
+	{% with pk=server.pk %}
+
 	<table style="width: 100%;">
 		<tr>
-			<td><h3>{{ server.server_name }}</h3></td>
+			<td><h3><div id="{{ pk }}__server_name" class="current_data"></div></h3></td>
 			<td>
 				{% if user.is_authenticated %}
 					<div id="vote_message" style="float: right;">
@@ -43,28 +45,38 @@
 		<div id="flot_num_players" class="flot_plot"></div>
 	</div>
 
-	<h4>Current</h4>
+	<h4>Current</h4>					
+
 	<table style="padding-top: 50px; width: 100%;">
 		<tr>
 			<td style="width: 40%; padding-right: 5px;">
 				<table>
-					<tr><td><img id="banner" src="" /></td></tr>
-					<tr><td id="motd"></td></tr>
+					<tr>
+						<td><div id="server_banner">
+							<img id="{{ pk }}__banner" class="current_data" src="" /><br/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="{{ pk }}__motd" class="current_data"></div>
+						</td>
+					</tr>
 					{% if server.website %}
-						<tr><td>Website: <div id="website"></div></td></tr>
+						<tr><td>Website: <div id="{{ pk }}__website" class="current_data"></div></td></tr>
 					{% endif %}
 				</table>			
 			</td>
 			<td>
 				<table style="width: 100%;">
-					<tr style="background: #E8E8E8;"><td style="width: 150px;">Version</td><td id="version"></td></tr>
+					<tr style="background: #E8E8E8;"><td style="width: 150px;">Version</td><td><div id="{{ pk }}__version" class="current_data"></div></td></tr>
 					<tr><td>Ip</td><td>{{ server.ip }}</td></tr>
 					<tr style="background: #E8E8E8;"><td>Port</td><td>{{ server.port }}</td></tr>
-					<tr><td>Game type</td><td id="game_type"></td></tr>
-					<tr style="background: #E8E8E8;"><td>Max players</td><td id="max_players"></td></tr>
-					<tr><td>Num players</td><td id="num_players"></td></tr>
-					<tr style="background: #E8E8E8;"><td>Votes</td><td id="votes"></td></tr>
-					<tr><td>Last queried</td><td id="last_queried"></td></tr>
+					<tr><td>Game type</td><td><div id="{{ pk }}__game_type" class="current_data"></div></td></tr>
+					<tr style="background: #E8E8E8;"><td>Max players</td><td><div id="{{ pk }}__max_players"class="current_data"></div></td></tr>
+					<tr><td>Num players</td><td><div id="{{ pk }}__num_players" class="current_data"></div></td></tr>
+					<tr style="background: #E8E8E8;"><td>Votes</td><td><div id="{{ pk }}__votes" class="current_data"></div></td></tr>
+					<tr><td>Last queried</td><td><div id="{{ pk }}__last_queried" class="current_data"></div></td></tr>
 				</table>
 			</td>
 		</tr>
@@ -111,6 +123,8 @@
 		<p>Login to post a comment.</p>
 		{% endif %}
 
+	{% endwith %}
+
 </div>
 
 <script>
@@ -119,22 +133,32 @@ $(function() {
 	// var assignments
 	var pk = $("#pk").html();
 	var flot_id = "#flot_num_players";
-	var ymax_id = "#max_players";
+	var ymax_id = "#"+pk+"__max_players";
 
-	// onload current data	
-	Dajaxice.mcserverslive.get_text_data(updateText, {'pk': pk });
+	// var assignments
+	var variables = [];
+	var servers = [];
+	var pair = [];
+	$(".current_data").each(function(){
+		pair = $(this).attr('id').split("__");
+		servers.push(pair[0]);
+		variables.push(pair[1]);
+	});
+	servers = ArrayUnique(servers);
+	variables = ArrayUnique(variables);
 
-	// onload create plot
+	// onload
+	Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables });
 	Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id} );
 
-	// update on intervals
+	// updates
+	setInterval( function() {
+		Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables })
+		}, 10000 
+	);
 	setInterval( function() {
 		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id})
 		}, 20000 
-	);
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_text_data(updateText, {'pk': pk })
-		}, 10000 
 	);
 
 });

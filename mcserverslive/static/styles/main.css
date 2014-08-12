@@ -38,7 +38,7 @@ footer p { padding: 20px 5px; font-size: 70%; }
 .pagination { float: right; padding: 10px; font-size: 80%; }
 .padding_50px { padding: 50px; }
 
-#banner { margin-top: 5px; border: 1px solid black; }
+#server_banner img { margin-top: 5px; border: 1px solid black; }
 
 #edit_button { float: right; margin: 0 20px; border-radius: 25px;}
 #edit_button a { min-width: 100px; height: 15px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: #A52A2A; color: white; border: 1px solid black;  }
