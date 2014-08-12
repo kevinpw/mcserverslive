@@ -4,8 +4,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
-from django.http import HttpResponse
-
 from django.contrib import admin
 admin.autodiscover()
 
@@ -23,7 +21,6 @@ urlpatterns = patterns('',
 	url(r'server_create_form/$', ServerCreateView.as_view(), name='create'),
 	url(r'server_update_form/(?P<pk>\d+)/$', ServerUpdateView.as_view(), name='update'),
 	url(r'^server_delete/(?P<pk>\d+)/$', ServerDeleteView.as_view(), name='delete'),
-	url(r'^server_post_comment/(?P<pk>\d+)/$', require_POST(ServerCommentSubmitView.as_view()), name='post_comment'),
 	url(r'^donate/$', TemplateView.as_view(template_name='donate.html'), name='donate'),
 
 	url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),

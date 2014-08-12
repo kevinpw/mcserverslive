@@ -18,7 +18,7 @@
 			<td>
 				{% if user.is_authenticated %}
 					<div id="vote_message" style="float: right;">
-						<div id="vote_button"><a onclick="Dajaxice.mcserverslive.vote(vote_result,{'user_pk': $('#user_pk').html(), 'pk': $('#pk').html() });">Vote for it!</a></div>
+						<div id="vote_button"><a onclick="voteSubmit();">Vote for it!</a></div>
 					</div>
 				{% else %}
 					<p style="float: right;">Login to vote for this server!</p>
@@ -43,8 +43,7 @@
 		<div id="flot_num_players" class="flot_plot"></div>
 	</div>
 
-		<h4>Current</h4>
-
+	<h4>Current</h4>
 	<table style="padding-top: 50px; width: 100%;">
 		<tr>
 			<td style="width: 40%; padding-right: 5px;">
@@ -85,6 +84,7 @@
 			<td><div id="all_comments_button"><a href="{% url 'server_comments' server.pk %}">All comments</a></div></td>
 		</tr>
 	</table>
+
 	<hr />
 	{% if server.servercomment_set %}
 		{% for comment in server.servercomment_set.all reversed %}
@@ -95,23 +95,21 @@
 	{% else %}
 		<p>No comments.</p>
 	{% endif %}
-	{% if user.is_authenticated %}
-	<h4>Post a new comment<h4>
-		<form method="post" action="{% url 'post_comment' server.pk %}">{% csrf_token %}
-		<table>
-			{{ form.non_field_errors }}
-			<tr><td>{{ form.comment.errors }}</td></tr>
-			<tr><td><div id="counter_description">Maximum characters: 300</div></td></tr>
-			<tr>
-				
-				<td>{{ form.comment }}</td>
-			</tr>
-			<tr><td><input type="submit" value="Post" /></td></tr>
+
+	<h4>Post a new comment</h4>
+		{% if user.is_authenticated %}
+		<form method="post" action="">{% csrf_token %}
+			<table>
+				{{ comment_form.non_field_errors }}
+				<tr><td>{{ comment_form.comment.errors }}</td></tr>
+				<tr><td><div id="counter_description">Maximum characters: 300</div></td></tr>
+				<tr><td>{{ comment_form.comment }}</td></tr>
+				<tr><td><input type="submit" value="Post" /></td></tr>
 			</table>
 		</form>
-	{% else %}
-		<h4>Sign in to post a comment</h4>
-	{%endif %}
+		{% else %}
+		<p>Login to post a comment.</p>
+		{% endif %}
 
 </div>
 

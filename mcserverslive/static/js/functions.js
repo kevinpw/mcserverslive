@@ -1,3 +1,4 @@
+// text counter
 function textCounter(field, cnt, maxlimit) {
 	var remaining = maxlimit - field.value.length;
 	if (field.value.length > maxlimit) {
@@ -8,6 +9,7 @@ function textCounter(field, cnt, maxlimit) {
 	}
 }
 
+// updating current info
 function updateText(data) {
 	data = data.data
 	$("#banner").attr( 'src',data['banner']);
@@ -22,6 +24,7 @@ function updateText(data) {
 	$("#plugins").html(data['plugins']);
 }
 
+// flot
 function Plot(flot_id, d, ymin, ymax) {
 
 	var options = {
@@ -39,10 +42,8 @@ function Plot(flot_id, d, ymin, ymax) {
 		}
 
 	}
-
 	var plot = $.plot(flot_id, [d], options);
 	return plot
-
 }
 
 function makePlot(data) {
@@ -62,9 +63,12 @@ function makePlot(data) {
 
 	var plot = Plot(flot_id, d, ymin, ymax);
 	plot.draw();
-
 }
 
+// voting
+function voteSubmit() {
+	Dajaxice.mcserverslive.vote(vote_result,{'user_pk': $('#user_pk').html(), 'pk': $('#pk').html() });
+}
 function vote_result(data) {
 	$("#vote_message").html(data.data);
 }

@@ -1,6 +1,5 @@
-from django.forms import ModelForm, ValidationError, Textarea, CharField, HiddenInput, Form, ChoiceField
+from django.forms import ModelForm, ValidationError, Textarea, CharField, HiddenInput, ChoiceField
 from django.core.files.images import get_image_dimensions
-from django.core.files import File
 from django.conf import settings
 from django.utils import timezone
 
