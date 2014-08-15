@@ -14,3 +14,5 @@ static/
 !static/images/
 !static/js/
 !static/styles/
+
+static_root/
