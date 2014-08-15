@@ -9,11 +9,10 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 
 from datetime import timedelta
-import random
-import string
+import random, string
 
-from mcserverslive.models import Server, ServerComment
-from mcserverslive.forms import ServerUpdateForm, ServerCreateForm, ServerCommentForm
+from mcserverslive.models import *
+from mcserverslive.forms import *
 
 #####################################
 # Server List View ##################

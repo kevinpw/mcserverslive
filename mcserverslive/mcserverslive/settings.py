@@ -43,8 +43,11 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'mcserverslive.urls'
-
 WSGI_APPLICATION = 'mcserverslive.wsgi.application'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATICFILES_DIRS = ((os.path.join(BASE_DIR, 'static')),) 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
