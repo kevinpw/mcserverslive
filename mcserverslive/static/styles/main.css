@@ -1,15 +1,26 @@
 /* stylesheet */
 
+/* Default media */
+
 body { background: white; }
 
-#wrapper { margin: auto; width: 800px; padding: 20px 0; box-shadow: 10px 10px 5px #888888; border-radius: 15px;  }
+.pagination { float: right; padding: 10px; font-size: 80%; }
+.padding_50px { padding: 50px; }
+.display_none { display: none; }
+
+footer { margin: 30px auto; width: 800px; border-radius: 15px; background: white; height: 50px; }
+footer p { padding: 20px 5px; font-size: 70%; }
+/*textarea { line-height: 1; }*/
+
+@media (max-width: 48em){
+#wrapper { margin: auto; width: 800px; padding: 20px 0; border-radius: 15px;  }
 #auth_bar { float: right; padding: 20px; height: 70px; }
 
 nav { margin-left: 5px; clear: both; }
 nav ul { list-style-type: none; margin: 0; padding: 0; }
 nav li { float: left; margin: 0 1px; border-radius: 25px;}
 nav a { display: block; width: 120px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: #A52A2A; color: white; border: 1px solid black; }
-nav a:hover { display: block; width: 120px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: white; color: #A52A2A; box-shadow: 3px 3px 1px #888888; border: 0; }
+nav a:hover { background: white; color: #A52A2A; }
 
 #main { clear: both; padding: 20px; min-height: 200px; }
 
@@ -20,7 +31,6 @@ nav a:hover { display: block; width: 120px; text-align: center; text-decoration:
 
 #server_list ul { list-style-type: none; margin: 0; padding: 0; }
 #server_list li { border: 1px solid black; width: 100%; margin: 2px 0; height: 160px; border-radius: 25px; background: white; }
-#server_list li:hover { box-shadow: 3px 3px 1px #888888; }
 
 #server_list table { height: 100%; width: 100%; font-size: 80%; }
 #server_list td:first-child { min-width: 100px; max-width: 100px; padding-left: 5px; }
@@ -32,37 +42,31 @@ nav a:hover { display: block; width: 120px; text-align: center; text-decoration:
 
 #stat_graph { width: 60%; height: 60%; }
 
-footer { margin: 30px auto; width: 800px; box-shadow: 10px 10px 5px #888888; border-radius: 15px; background: white; height: 50px; }
-footer p { padding: 20px 5px; font-size: 70%; }
-
-.pagination { float: right; padding: 10px; font-size: 80%; }
-.padding_50px { padding: 50px; }
-
 #server_banner img { margin-top: 5px; border: 1px solid black; }
 
 #edit_button { float: right; margin: 0 20px; border-radius: 25px;}
 #edit_button a { min-width: 100px; height: 15px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: #A52A2A; color: white; border: 1px solid black;  }
-#edit_button a:hover { text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: white; color: #A52A2A; box-shadow: 3px 3px 1px #888888; border: 0; }
+#edit_button a:hover { background: white; color: #A52A2A; }
 
 #delete_button { float: right; margin: 0 1px; border-radius: 25px;}
 #delete_button a { min-width: 100px; height: 15px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: #A52A2A; color: white; border: 1px solid black;  }
-#delete_button a:hover { text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: white; color: #A52A2A; box-shadow: 3px 3px 1px #888888; border: 0; }
+#delete_button a:hover { text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: white; color: #A52A2A; border: 0; }
 
 #counter_description { font-size: 80%; float: right; font-weight: normal; }
 
 #all_comments_button { float: left; margin: 0 1px; border-radius: 25px;}
 #all_comments_button a { display: block; width: 120px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: #A52A2A; color: white; border: 1px solid black; }
-#all_comments_button a:hover { display: block; width: 120px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: white; color: #A52A2A; box-shadow: 3px 3px 1px #888888; border: 0; }
+#all_comments_button a:hover { background: white; color: #A52A2A; }
 
 #vote_button { float: right; text-align: center; margin: auto; }
 #vote_button a { width: 120px; height: 110px; text-decoration: none; border-radius: 120px; padding: 5px 0;  margin: auto; background: #A52A2A; color: white; border: 1px solid black; }
-#vote_button a:hover { width: 120px; text-align: center; text-decoration: none; border-radius: 25px; padding: 5px 0;  background: white; color: #A52A2A; box-shadow: 3px 3px 1px #888888; border: 0; }
+#vote_button a:hover { background: white; color: #A52A2A; }
 
 #comment_list_item { width: 100%; min-height: 50px; margin: 5px 0; font-size: 80%; }
 #comment_list_item table { width: 100%; }
 #comment_list_item td { padding-left: 5px; min-width: 50px; }
 
-textarea { line-height: 1; }
+
 
 .flot_shell {
 	box-sizing: border-box;
@@ -91,4 +95,4 @@ textarea { line-height: 1; }
 	line-height: 1.2em;
 }
 
-.display_none { display: none; }
+}

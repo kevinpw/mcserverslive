@@ -8,11 +8,13 @@
 
 {% block content %}
 <div>
+
 	{% if rand_motd %}
 		<h3>Add a Server Listing</h3>
 	{% else %}
 		<h3>Update a Server Listing</h3>
 	{% endif %}
+
 	<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
 
 			{% if rand_motd %}

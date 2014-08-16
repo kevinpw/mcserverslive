@@ -30,6 +30,7 @@ INSTALLED_APPS = (
 	'registration',
 	'captcha',
 	'dajaxice',
+	'bootstrap3',
 
 )
 
@@ -74,4 +75,3 @@ TEMPLATE_LOADERS = DEFAULT_SETTINGS.TEMPLATE_LOADERS + (
 STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS + (
 	'dajaxice.finders.DajaxiceFinder',
 )
-
