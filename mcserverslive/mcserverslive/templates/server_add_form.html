@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Server Form{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+	<h1>Add a Server Listing</h1>
+	<p class="lead">Reload your server with the following MOTD to add. You can change this after your server is listed.</p>
+	<p class="lead">{{ rand_motd }}</p>
+</div>
+
+<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+	<input type="hidden" name="rand_motd" value="{{ rand_motd }}" />
+		{{ form.server_name }}
+		{{ form.banner }}
+		must be 560x100 pixels
+		{{ form.ip }}
+		{{ form.port }}
+		<div id="counter_description">Maximum characters: 2000</div></td></tr>
+		{{ form.description }}
+		{{ form.website }}
+		<button class="btn btn-lg btn-success btn-block" type="submit" style="margin-top: 1%;"/>Add</button>
+	</form>
+</div>	
+
+<script>
+
+$(function() {
+	// add active class to nav on createview only
+	var pathname = window.location.pathname;
+	if(pathname.indexOf("create") > -1) $("a:contains('Add')").parent().addClass("active");
+});
+
+</script>
+{% endblock %}

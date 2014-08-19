@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Registeration{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+	<h1>{{ user }}'s Account</h1>
+	<p class="lead">Email Settings</p>
+</div>
+
+<form class="my-form" method='post' action='.'>{% csrf_token %}
+		{{ form.setting }}
+	<button class="btn btn-lg btn-warning" type="submit">Update</button>
+</form>
+
+<script>
+$(function() {
+// cause problems?
+//	$("a:contains('Account')").parent().addClass("active");
+
+});
+</script>
+
+{% endblock %}

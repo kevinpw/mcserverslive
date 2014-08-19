@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+	<h1>Post a comment</h1>
+	<p class="lead">{{ server.pk }}</p>
+</div>
+
+<form class="my-form" method="post" action="">{% csrf_token %}	
+	<div id="counter_description">Maximum characters: 300</div>
+	{{ form.comment }}
+	<button class="btn btn-lg btn-success btn-block" type="submit"/>Post</button>
+</form>
+
+{% endblock %}
