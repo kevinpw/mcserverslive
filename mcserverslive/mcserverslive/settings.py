@@ -30,7 +30,6 @@ INSTALLED_APPS = (
 	'registration',
 	'captcha',
 	'dajaxice',
-	'bootstrap3',
 
 )
 
@@ -66,7 +65,6 @@ from local_settings import *
 import django.conf.global_settings as DEFAULT_SETTINGS
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
 	"django.core.context_processors.request",
-	"accounts.context_processors.include_login_form",
 	"accounts.context_processors.domain",
 )
 TEMPLATE_LOADERS = DEFAULT_SETTINGS.TEMPLATE_LOADERS + (
@@ -75,3 +73,6 @@ TEMPLATE_LOADERS = DEFAULT_SETTINGS.TEMPLATE_LOADERS + (
 STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS + (
 	'dajaxice.finders.DajaxiceFinder',
 )
+
+# override auth redirect url
+LOGIN_REDIRECT_URL = '/'

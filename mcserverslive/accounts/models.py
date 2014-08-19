@@ -11,6 +11,14 @@ class UserProfile(models.Model):
 	def __unicode__(self):
 		return unicode(self.user)
 
+class EmailSetting(models.Model):
+
+	user = models.OneToOneField(User)
+	setting = models.BooleanField(default=True)
+
+	def __unicode__(self):
+		return unicode(self.user)
+
 from registration.signals import user_registered
 
 def user_registered_callback(sender, user, request, **kwargs):

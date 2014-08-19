@@ -23,7 +23,7 @@ function ArrayUnique(arr) {
 // update current info
 function getCurrentData(data) {
 	var variables = data.variables;
-	var servers = data.data;	
+	var servers = data.data;
 	var id = '';
 	for(server in servers) {
 		for(var i=0; i<variables.length; i++) {
@@ -36,54 +36,3 @@ function getCurrentData(data) {
 		}
 	}
 }
-
-// flot
-function Plot(flot_id, d, ymin, ymax) {
-
-	var options = {
-
-		series: {
-			lines: { show: true, fill: true }
-		},
-		xaxis: { 
-			mode: "time",
-			twelveHourClock: true,
-		},
-		yaxis: {
-			min: ymin,
-			max: ymax
-		}
-
-	}
-	var plot = $.plot(flot_id, [d], options);
-	return plot
-}
-
-function makePlot(data) {
-	
-	var flot_id = data.flot_id;
-	var ymax = $(data.ymax_id).html();
-	var ymin = -1*(ymax/4);
-	var data = data.data;	
-	var d = [];
-
-	for(var i in data){
-		if(data[i] == null) data[i] = ymin;
-		d.push([parseInt(i), data [i]]);
-	}
-
-	d.sort(function(a,b){return a[0]-b[0]});
-
-	var plot = Plot(flot_id, d, ymin, ymax);
-	plot.draw();
-}
-
-// voting
-function voteSubmit() {
-	Dajaxice.mcserverslive.vote(vote_result,{'user_pk': $('#user_pk').html(), 'pk': $('#pk').html() });
-}
-function vote_result(data) {
-	$("#vote_message").html(data.data);
-}
-
-

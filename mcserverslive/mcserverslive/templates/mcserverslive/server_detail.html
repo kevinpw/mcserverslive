@@ -14,90 +14,57 @@
 
 	{% with pk=server.pk %}
 
-	<table style="width: 100%;">
-		<tr>
-			<td><h3><div id="{{ pk }}__server_name" class="current_data"></div></h3></td>
-			<td>
-				{% if user.is_authenticated %}
-					<div id="vote_message" style="float: right;">
-						<div id="vote_button"><a onclick="voteSubmit();">Vote for it!</a></div>
-					</div>
-				{% else %}
-					<p style="float: right;">Login to vote for this server!</p>
-				{% endif %}
-			</td>
-		</tr>
-	</table><br/><br/>
+	<form id="all_comments_form" action="{% url 'server_comments' pk %}"></form>
 
-	{% ifequal server.user request.user %}
-		<div id="delete_button">
-			<a href="{% url 'delete' server.pk %}">DELETE</a>
-		</div>
-		<div id="edit_button">
-			<a href="{% url 'update' server.pk %}">Edit</a>
-		</div>
-	{% endifequal %}
+	<div class="page-header">
+		<h1><div id="{{ pk }}__server_name" class="current_data"></div></h1>
+	</div><br />
 
-
-	<h4>History</h4>
-	<h5>Number of Players over Time</h5>
-	<div id="flot_shell" class="flot_shell">
-		<div id="flot_num_players" class="flot_plot"></div>
+	<div class="btn-group" style="margin-bottom: 3%;">
+		<button class="btn btn-lg btn-primary" type="submit" form="all_comments_form">Comments</button>
+		<button class="btn btn-lg btn-success" type="button" onclick="voteSubmit();">Vote for it!</button>
 	</div>
 
-	<h4>Current</h4>					
+	<div id="vote_message"></div>
 
-	<table style="padding-top: 50px; width: 100%;">
-		<tr>
-			<td style="width: 40%; padding-right: 5px;">
-				<table>
-					<tr>
-						<td><div id="server_banner">
-							<img id="{{ pk }}__banner" class="current_data" src="" /><br/>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="{{ pk }}__motd" class="current_data"></div>
-						</td>
-					</tr>
-					{% if server.website %}
-						<tr><td>Website: <div id="{{ pk }}__website" class="current_data"></div></td></tr>
-					{% endif %}
-				</table>			
-			</td>
-			<td>
-				<table style="width: 100%;">
-					<tr style="background: #E8E8E8;"><td style="width: 150px;">Version</td><td><div id="{{ pk }}__version" class="current_data"></div></td></tr>
-					<tr><td>Ip</td><td>{{ server.ip }}</td></tr>
-					<tr style="background: #E8E8E8;"><td>Port</td><td>{{ server.port }}</td></tr>
-					<tr><td>Game type</td><td><div id="{{ pk }}__game_type" class="current_data"></div></td></tr>
-					<tr style="background: #E8E8E8;"><td>Max players</td><td><div id="{{ pk }}__max_players"class="current_data"></div></td></tr>
-					<tr><td>Num players</td><td><div id="{{ pk }}__num_players" class="current_data"></div></td></tr>
-					<tr style="background: #E8E8E8;"><td>Votes</td><td><div id="{{ pk }}__votes" class="current_data"></div></td></tr>
-					<tr><td>Last queried</td><td><div id="{{ pk }}__last_queried" class="current_data"></div></td></tr>
-				</table>
-			</td>
-		</tr>
-	</table>
+	<div class="row">
+		<div id="server_banner" style="margin-top: 5%; padding: 1%;">
+			<img id="{{ pk }}__banner" class="img-responsive center-block current_data" src="" />
+		</div>
+	</div>
 
-	<h4>Description</h4>
+	<div id="{{ pk }}__motd" class="current_data" style="margin-top: 5%;"></div>
+
+	<h2 class="sub-header">Current Info</h2>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<tr><td>Version</td><td><div id="{{ pk }}__version" class="current_data"></div></td></tr>
+			<tr><td>IP</td><td>{{ server.ip }}:{{ server.port }}</td></tr>
+			<tr><td>Game type</td><td><div id="{{ pk }}__game_type" class="current_data"></div></td></tr>
+			<tr><td>Max players</td><td><div id="{{ pk }}__max_players"class="current_data"></div></td></tr>
+			<tr><td>Num players</td><td><div id="{{ pk }}__num_players" class="current_data"></div></td></tr>
+			<tr><td>Votes</td><td><div id="{{ pk }}__votes" class="current_data"></div></td></tr>
+			{% if server.website %}
+				<tr><td>Website</td><td><div id="{{ pk }}__website" class="current_data"></div></td></tr>
+			{% endif %}
+			<tr><td>Last queried</td><td><div id="{{ pk }}__last_queried" class="current_data"></div></td></tr>
+		</table>
+	</div>
+
+	<h2 class="sub-header">Current Description</h2>
 		{{ server.description }}
 
-	<h4>Plugins</h4>
-		<table>
-			<tr><td id="plugins"></td></tr>
-		</table>			
-
-	<table style="width:100%;">
-		<tr>
-			<td><h4>Recent Comments</h4></td>
-			<td><div id="all_comments_button"><a href="{% url 'server_comments' server.pk %}">All comments</a></div></td>
-		</tr>
-	</table>
-
+	<h2 class="sub-header">Current Plugins</h2>
+	<p id="{{ pk }}__plugins" class="current_data"></p>
+{% comment %}
+	<h2 class="sub-header">Number of Players History</h2>
+	<div id="flot_shell" class="flot_shell">
+		<div id="flot_num_players" class="flot"></div>
+	</div>		
+{% endcomment %}
+	<h2 class="sub-header">Recent Comments</h2>
 	<hr />
+
 	{% if server.servercomment_set %}
 		{% for comment in server.servercomment_set.all reversed %}
 			{% if forloop.counter0 < 10 %}
@@ -108,26 +75,68 @@
 		<p>No comments.</p>
 	{% endif %}
 
-	<h4>Post a new comment</h4>
-		{% if user.is_authenticated %}
-		<form method="post" action="">{% csrf_token %}
-			<table>
-				{{ comment_form.non_field_errors }}
-				<tr><td>{{ comment_form.comment.errors }}</td></tr>
-				<tr><td><div id="counter_description">Maximum characters: 300</div></td></tr>
-				<tr><td>{{ comment_form.comment }}</td></tr>
-				<tr><td><input type="submit" value="Post" /></td></tr>
-			</table>
-		</form>
-		{% else %}
-		<p>Login to post a comment.</p>
-		{% endif %}
-
 	{% endwith %}
 
 </div>
 
 <script>
+
+// voting
+function voteSubmit() {
+	var user_pk = $('#user_pk').html();
+	if(user_pk=='None') {
+		$("#vote_message").html("Login to vote!");
+	} else {
+		Dajaxice.mcserverslive.vote(vote_result,{'user_pk': user_pk, 'pk': $('#pk').html() });
+	}
+}
+function vote_result(data) {
+	$("#vote_message").html(data.data);
+}
+
+// flot
+function Plot(flot_id, d, ymin, ymax) {
+
+	var options = {
+
+		series: {
+			lines: { show: true, fill: true }
+		},
+		xaxis: { 
+			mode: "time",
+			twelveHourClock: true,
+		},
+		yaxis: {
+			min: ymin,
+			max: ymax
+		}
+
+	}
+	var plot = $.plot(flot_id, [d], options);
+	return plot
+}
+
+function makePlot(data) {
+	
+	var flot_id = data.flot_id;
+	var ymax = $(data.ymax_id).html();
+	var ymin = -1*(ymax/4);
+	var data = data.data;	
+	var d = [];
+
+	for(var i in data){
+		if(data[i] == null) data[i] = ymin;
+		d.push([parseInt(i), data [i]]);
+	}
+
+	d.sort(function(a,b){return a[0]-b[0]});
+
+	var plot = Plot(flot_id, d, ymin, ymax);
+	plot.draw();
+}
+
+
+// document ready
 $(function() {
 
 	// var assignments
@@ -160,6 +169,7 @@ $(function() {
 		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id})
 		}, 20000 
 	);
+
 
 });
 </script>

@@ -48,15 +48,18 @@ def get_server_data(server, variables):
 		data['num_players'] = num_players.num_players
 	else:
 		data['num_players'] = 'offline'
+
 	last_queried = int((timezone.now() - num_players.query_time).total_seconds() // 60)
 	if last_queried == 1:
 		s = ''
 	else:
 		s = 's'
+
 	data['last_queried'] = '{0} minute{1} ago'.format(last_queried,s) 
 
 	if 'website' in variables:
 		data['website']	= server.website
+
 	if 'plugins' in variables:
 		plugins = ''
 		if server.plugin_set.all():
@@ -86,11 +89,11 @@ def get_current_data(request, servers, variables):
 
 @dajaxice_register
 def vote(request, user_pk, pk):
-	
+
 	userprofile = get_object_or_404(UserProfile, id=user_pk)
-	
+		
 	if userprofile.voted:
-		data = 'You already voted today. Vote again tomorrow.'
+		data = 'You already voted today!'
 	else:
 		userprofile.voted = True
 		userprofile.save()

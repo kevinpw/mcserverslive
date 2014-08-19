@@ -1,10 +1,10 @@
 from registration.forms import RegistrationFormUniqueEmail
 from captcha.fields import ReCaptchaField
-from django.forms import ValidationError, CharField, Select
-
+from django.forms import ValidationError, CharField, Select, ModelForm, CheckboxInput
 from django.contrib.auth.models import User
-from accounts.models import UserProfile
+from django.contrib.auth.forms import AuthenticationForm
 
+from accounts.models import *
 from accounts.pytz_choices import PYTZ_CHOICES
 
 class CustomRegistrationForm(RegistrationFormUniqueEmail):
@@ -24,3 +24,9 @@ class CustomRegistrationForm(RegistrationFormUniqueEmail):
 		if not any(d.isnumeric() for d in data):
 			raise ValidationError(u'Passwords need to be at least 8 characters long and have at least one number and letter')					
 		return data
+
+class EmailSettingsForm(ModelForm):
+
+	class Meta:
+		model = EmailSetting
+		fields = ['setting']

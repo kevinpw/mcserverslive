@@ -1,12 +1,9 @@
-<div id="comment_list_item">
-	<table>
-		<tr>
-			<td>{{ comment.user }}</td>
-			<td>
-				<p>{{ comment.comment_time }}</p>
-				<p>{{ comment.comment }}</p>
-			</td>
-		</tr>
-	</table>
-</div>
-<hr />
+<div class="row" style="margin-bottom: 1%;">
+	<div class="col-md-4" style="clear: both;">
+		{{ comment.user }}
+	</div>
+	<div class="col-md-8">
+		{{ comment.comment_time }}<br /><br/>
+		{{ comment.comment }}
+	</div>	
+</div><hr />

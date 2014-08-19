@@ -9,7 +9,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="padding_50px">
+<div class="page-header">
+	<h1>Activation</h1>
+</div><br />
+
 	{% url 'auth_login' as auth_login_url %}
 	{% if account %}
 		Thanks {{ account }}, activation complete!
@@ -17,5 +20,5 @@
 	{% else %}
 		Oops &ndash; it seems that your activation key is invalid. Please check the url again.
 	{% endif %}
-</div>
+
 {% endblock %}

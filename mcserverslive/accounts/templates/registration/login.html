@@ -2,26 +2,39 @@
 
 {% block content %}
 
+<div class="page-header">
+	<h1>Login</h1>
+</div><br />
+
 {% if form.errors %}
-	<p>Your username and password didn't match. Please try again.</p>
+	<div class="alert alert-warning" role="alert">Your username and password didn't match. Please try again.</div>
 {% endif %}
-<div class="padding_50px">
-<form method="post" action="{% url 'auth_login' %}">{% csrf_token %}
-	<h3>Login</h3>
-	<table>
-		<tr>
-    		<td>{{ form.username.label_tag }}</td>
-    		<td>{{ form.username }}</td>
-		</tr>
-		<tr>
-    		<td>{{ form.password.label_tag }}</td>
-    		<td>{{ form.password }}</td>
-		</tr>
-	</table>
-	<input type="submit" value="Login" />
+
+<form class="my-form" action="{% url 'accounts:register' %}" id="registration_form"></form>
+<form class="my-form" action="{% url 'django.contrib.auth.views.password_reset' %}" id="password_reset_form"></form>
+
+<form class="my-form" method="post" action="{% url 'auth_login' %}" role="form">{% csrf_token %}
+
+		{{ form.username }}
+		{{ form.password }}
+
+	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 	<input type="hidden" name="next" value="{{ next }}" />
-	<p>Don't have an account?  <a href="{% url 'accounts:register' %}">Register</a></p>
-	<p>Forgot your username/password? <a href="{% url 'django.contrib.auth.views.password_reset' %}">Forgot my info</a></p>
+
+	<div class="btn-toolbar">
+		<button class="btn btn-lg btn-success" type="submit" form="registration_form">Register</button>
+		<button class="btn btn-lg btn-warning" type="submit" form="password_reset_form">Forgot my info</button>
+	</div>
+	
 </form>
-</div>
+
+<script>
+$(function() {
+	$("a:contains('Login')").parent().addClass("active");
+	$("input[name=username]").addClass("form-control");
+	$("input[name=password]").addClass("form-control");
+	$("input[name=username]").attr("placeholder", "Username");
+	$("input[name=password]").attr("placeholder", "Password");
+});
+</script>
 {% endblock %}

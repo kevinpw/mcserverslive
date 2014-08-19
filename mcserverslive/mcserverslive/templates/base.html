@@ -8,38 +8,40 @@
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	{% block description %}{% endblock %}
-	<title>{{ domain }} {% block title %}{% endblock %}</title>
 	<link rel="icon" type="image/ico" href="{% static "images/favicon.ico" %}" />
+	{% block description %}{% endblock %}
 
-{% comment %}
+	<title>{{ domain }} {% block title %}{% endblock %}</title>
+
+	<link rel="stylesheet" href="{% static "bootstrap-3.2.0-dist/css/bootstrap.min.css" %}" />
+	<link rel="stylesheet" href="{% static "bootstrap-3.2.0-dist/css/bootstrap-theme.min.css" %}" />
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
 	<link rel="stylesheet" href="{% static "styles/main.css" %}" />
-{% endcomment %}
 
-	<script src="{% static "js/flot/jquery.min.js" %}"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="{% static "bootstrap-3.2.0-dist/js/bootstrap.min.js" %}"></script>
 	{% dajaxice_js_import %}
-	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot/excanvas.min.js"></script><![endif]-->
 	<script language="javascript" type="text/javascript" src="{% static "js/flot/jquery.flot.js" %}"></script>
 	<script language="javascript" type="text/javascript" src="{% static "js/flot/jquery.flot.time.js" %}"></script>
+	<!--[if lte IE 8]>
+		<script language="javascript" type="text/javascript" src="js/flot/excanvas.min.js"></script>
+	<![endif]-->
 	<script language="javascript" type="text/javascript" src="{% static "js/functions.js" %}"></script>
 
 </head>
 
 <body>
-	<div id="wrapper"> 
 
-		{% include "banner.html" %}
-		{% block auth_bar %}{% endblock %}
-		{% include "nav.html" %}
+		{% include 'nav.html' %}
 
-		<div id="main">
+		<div class="container" style="margin-top: 10%; margin-bottom: 5%;">
 			{% block content %}{% endblock %}
 		</div>
 
-	</div> 
-
-	{% block footer %}{% endblock %}
+		{% block footer %}{% endblock %}
 
 </body>
 

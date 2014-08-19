@@ -16,15 +16,14 @@ class ServerUpdateForm(ModelForm):
 	class Meta:
 		model = Server
 		fields = ['server_name','banner','description','website']
-		widgets = { 'description': Textarea(attrs={ 'style': 'resize: none;',
-			'cols': 80, 'rows': 20,'onKeyUp': "textCounter(this,'counter_description',2000);"}), }
+		widgets = {'description': Textarea(attrs={'onKeyUp': "textCounter(this,'counter_description',2000);"}), }
 
 	def clean(self):
 		cleaned_data = super(ServerUpdateForm, self).clean()
 
 		width, height = get_image_dimensions(cleaned_data['banner'])
-		if width is not 300 and height is not 50:
-			raise ValidationError(u'Banners need to be 300x50 pixels. Please resize image.')
+		if width is not 560 and height is not 100:
+			raise ValidationError(u'Banners need to be 560x100 pixels. Please resize image.')
 
 		return cleaned_data
 
@@ -38,13 +37,13 @@ class ServerCreateForm(ModelForm):
 	class Meta:
 		model = Server
 		fields = ['server_name','banner','ip','port','description','website']
-		widgets = { 'description': Textarea(attrs={ 'style': 'resize: none;',
-			'cols': 80, 'rows': 20,'onKeyUp': "textCounter(this,'counter_description',2000);"}), }
+		widgets = { 'description': Textarea(attrs={'onKeyUp': "textCounter(this,'counter_description',2000);"}), }
 
 	def clean(self):
-		cleaned_data = super(ServerCreateForm, self).clean()
 
+		cleaned_data = super(ServerCreateForm, self).clean()
 		query = MinecraftQuery(cleaned_data['ip'], cleaned_data['port'])
+
 		try:
 			self.full_status = query.get_rules()
 		except:
@@ -58,8 +57,8 @@ class ServerCreateForm(ModelForm):
 	def clean_banner(self):
 		data = self.cleaned_data['banner']
 		width, height = get_image_dimensions(data)
-		if width is not 300 and height is not 50:
-			raise ValidationError(u'Banners need to be 300x50 pixels. Please resize image.')
+		if width is not 560 and height is not 100:
+			raise ValidationError(u'Banners need to be 560x100 pixels. Please resize image.')
 		return data
 
 	def save(self, commit=True):
@@ -93,8 +92,7 @@ class ServerCommentForm(ModelForm):
 	class Meta:
 		model = ServerComment
 		fields = ['comment']
-		widgets = { 'comment': Textarea(attrs={ 'style': 'resize: none;',
-			'cols': 50, 'rows': 4,'onKeyUp': "textCounter(this,'counter_description',300);"}), }
+		widgets = { 'comment': Textarea(attrs={'onKeyUp': "textCounter(this,'counter_description',300);"}), }
 
 	def clean_comment(self):
 		data = self.cleaned_data['comment']

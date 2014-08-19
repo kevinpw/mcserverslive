@@ -26,31 +26,19 @@
 			{% endif %}
 				
 
-		<table>
-			{{ form.non_field_errors }}
-			<tr><td>{{ form.server_name.errors }}</td></tr>
-			<tr>
-				<td>{{ form.server_name.label }}</td>
-				<td>{{ form.server_name }}</td>
-			</tr>
-			<tr><td>{{ form.banner.errors }}</td></tr>
-			<tr>
-				<td>{{ form.banner.label }}</td>
-				<td>{{ form.banner }}</td>
-			</tr>
-			<tr><td></td><td>must be 300x50 pixels, &lt;10 MB</td></tr>
-			<tr><td>{{ form.ip.errors }}</td></tr>
-			<tr>
-				<td>{{ form.ip.label }}</td>
-				<td>{{ form.ip }}</td>
-			</tr>
-			<tr><td>{{ form.port.errors }}</td></tr>
-			{% if rand_motd %}
-				<tr>
-					<td>Query {{ form.port.label | lower }}</td>
-					<td>{{ form.port }}</td>
-				</tr>
-			{% endif %}
+		{{ form.server_name.errors }}</td></tr>
+		{{ form.server_name.label }}</td>
+		{{ form.server_name }}</td>
+		{{ form.banner.errors }}</td></tr>
+		{{ form.banner.label }}</td>
+		{{ form.banner }}</td>
+		must be 560x100 pixels</td></tr>
+		{{ form.ip.errors }}</td></tr>
+		{{ form.ip }}</td>
+		{{ form.port.errors }}</td></tr>
+		{% if rand_motd %}
+		{{ form.port }}</td>
+		{% endif %}
 			<tr><td>{{ form.description.errors }}</td></tr>
 			<tr><td></td><td><div id="counter_description">Maximum characters: 2000</div></td></tr>
 			<tr>
@@ -67,4 +55,14 @@
 		<input type="submit" value="Submit" />
 	</form>
 </div>	
+
+<script>
+
+$(function() {
+	// add active class to nav on createview only
+	var pathname = window.location.pathname;
+	if(pathname.indexOf("create") > -1) $("a:contains('Add')").parent().addClass("active");
+});
+
+</script>
 {% endblock %}
