@@ -13,26 +13,39 @@
 	<p class="lead">{{ rand_motd }}</p>
 </div>
 
-<form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+<form class="my-form" enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+	{% include 'form_errors.html' %}
+	{{ form.server_name }}
+	{{ form.banner.label }}
+	<div>Must be 560x100 pixels</div>
+	{{ form.banner }}
+	{{ form.ip }}
+	{{ form.port }}
+	<div id="counter_description">Maximum characters: 2000</div></td></tr>
+	{{ form.description }}
+	{{ form.website }}
+	<button class="btn btn-lg btn-success btn-block" type="submit"/>Add</button>
 	<input type="hidden" name="rand_motd" value="{{ rand_motd }}" />
-		{{ form.server_name }}
-		{{ form.banner }}
-		must be 560x100 pixels
-		{{ form.ip }}
-		{{ form.port }}
-		<div id="counter_description">Maximum characters: 2000</div></td></tr>
-		{{ form.description }}
-		{{ form.website }}
-		<button class="btn btn-lg btn-success btn-block" type="submit" style="margin-top: 1%;"/>Add</button>
-	</form>
-</div>	
+</form>	
 
 <script>
 
 $(function() {
-	// add active class to nav on createview only
-	var pathname = window.location.pathname;
-	if(pathname.indexOf("create") > -1) $("a:contains('Add')").parent().addClass("active");
+	$("a:contains('Add')").parent().addClass("active");
+	$("input[name=server_name]").addClass("form-control");
+	$("input[name=server_name]").attr("placeholder", "Server Name");
+	$("input[name=server_name]").attr("style","margin-bottom: 5%;");
+	$("input[name=ip]").addClass("form-control");
+	$("input[name=ip]").attr("placeholder", "IP");
+	$("input[name=port]").addClass("form-control");
+	$("input[name=port]").attr("style", "margin-bottom: 3%;");
+	$("textarea[name=description]").addClass("form-control");
+	$("textarea[name=description]").attr("placeholder", "Description");
+	$("input[name=website]").addClass("form-control");
+	$("input[name=website]").attr("placeholder", "Website");
+
+	$("input[name=banner]").addClass("form-control");
+
 });
 
 </script>

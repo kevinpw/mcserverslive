@@ -10,13 +10,23 @@
 
 <div class="page-header">
 	<h1>Post a comment</h1>
-	<p class="lead">{{ server.pk }}</p>
+	<p class="lead">on {{ server.server_name }}</p>
 </div>
 
-<form class="my-form" method="post" action="">{% csrf_token %}	
+<form class="my-form" method="post" action="">{% csrf_token %}
+	{% include 'form_errors.html' %}	
 	<div id="counter_description">Maximum characters: 300</div>
 	{{ form.comment }}
 	<button class="btn btn-lg btn-success btn-block" type="submit"/>Post</button>
 </form>
+
+<script>
+
+$(function() {
+	$("textarea[name=comment]").addClass("form-control");
+	$("textarea[name=comment]").attr("placeholder", "Description");
+});
+
+</script>
 
 {% endblock %}

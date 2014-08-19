@@ -11,27 +11,32 @@
 	<h1>Update a Server Listing</h1>
 </div>
 
-	<form class="form-server" enctype="multipart/form-data" action="" method="post">{% csrf_token %}
-		{{ form.server_name }}
-		{{ form.banner }}
-		must be 560x100 pixels
-		<div id="counter_description">Maximum characters: 2000</div>
-		{{ form.description }}
-		{{ form.website }}
-		<button class="btn btn-lg btn-success btn-block" type="submit" style="margin-top: 1%;"/>Update</button>
-	</form>	
+<form class="my-form" enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+	{% include 'form_errors.html' %}
+	{{ form.server_name }}
+	{{ form.banner.label }}
+	<div>Must be 560x100 pixels</div>
+	{{ form.banner }}
+	<div id="counter_description">Maximum characters: 2000</div></td></tr>
+	{{ form.description }}
+	{{ form.website }}
+	<button class="btn btn-lg btn-warning btn-block" type="submit"/>Update</button>
+</form>	
 
 <script>
 
 $(function() {
-	// add active class to nav on createview only
-	var pathname = window.location.pathname;
-	if(pathname.indexOf("create") > -1) $("a:contains('Add')").parent().addClass("active");
+	
+	$("a:contains('Account')").parent().addClass("active");
+	$("input[name=server_name]").addClass("form-control");
+	$("input[name=server_name]").attr("placeholder", "Server Name");
+	$("input[name=server_name]").attr("style","margin-bottom: 5%;");
+	$("textarea[name=description]").addClass("form-control");
+	$("textarea[name=description]").attr("placeholder", "Description");
+	$("input[name=website]").addClass("form-control");
+	$("input[name=website]").attr("placeholder", "Website");
 
-	// add bootstrap classes to inputs
-	$("input[name=server_name]").addClass('form-control');
-	$("input[name=description]").addClass('form-control');
-	$("input[name=website]").addClass('form-control');
+	$("input[name=banner]").addClass("form-control");
 });
 
 </script>

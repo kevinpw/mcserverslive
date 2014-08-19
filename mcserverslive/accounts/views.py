@@ -1,9 +1,11 @@
-from django.shortcuts import render
-from registration.backends.default.views import RegistrationView
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseForbidden
+from django.core.urlresolvers import reverse
+
+from registration.backends.default.views import RegistrationView
 
 from accounts.forms import *
 from accounts.models import EmailSetting
@@ -26,6 +28,9 @@ class EmailSettingsUpdateView(UpdateView):
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
 		return super(EmailSettingsUpdateView, self).dispatch(*args, **kwargs)
+
+	def get_object(self, queryset=None):
+		return get_object_or_404(EmailSetting, user=self.request.user)
 
 	def form_valid(self, form):
 		form.instance.user = self.request.user

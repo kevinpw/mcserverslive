@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block description %}
+<meta name="description" content="Minecraft Server List" />
+{% endblock %}
+
+{% block title %}My Servers{% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+{% block auth_bar %}
+{% include 'auth_bar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+	<h1>mcserverslive</h1>
+	<p class="lead">A Minecraft server list connected live</p>
+</div>
+<div id="server_list">
+	{% if object_list %}
+		<ul style="list-style-type: none; padding: 0;">
+			{% for server in object_list %}
+
+				{% with pk=server.pk %}
+
+				<li>
+					<div class="row">
+						<div class="col-md-4">
+							<div id="{{ pk }}__server_name" class="current_data"></div>
+							<div id="{{ pk }}__num_players" class="current_data" style="float: left;"></div>
+							<div style="float: left;">/</div>
+							<div id="{{ pk }}__max_players"class="current_data" style="float: left; padding: 0 0.5em 0 0;"></div><p>players</p>
+							<div id="server_ip">IP: <a href="{% url 'detail' server.pk %}">{{ server.ip }}:{{ server.port }}</a></div>
+							<div style="float: left; padding: 0 5px 0 0;">Votes:</div><div id="{{ pk }}__votes" class="current_data"></div>
+							<div style="float: left; padding: 0 5px 0 0;">Last queried:</div><div id="{{ pk }}__last_queried" class="current_data"></div><br />
+						</div>
+						<div class="col-md-8">
+							<div id="server_banner">
+								<a href="{% url 'detail' server.pk %}">
+									<img id="{{ pk }}__banner" class="img-responsive current_data" src="" />
+								</a>
+							</div>
+							<div id="{{ pk }}__motd" class="current_data" style="margin-top: 1%;"></div><br/>
+							<div style="float: left; padding: 0 5px 0 0;">Version: </div> 
+							<div id="{{ pk }}__version" class="current_data" style="float: left;"></div>
+							<div style="float:left; padding: 0 5px 0 0;">, Game Type:</div> 
+							<div id="{{ pk }}__game_type" class="current_data"></div><br/>
+						</div>
+					</div>	
+				</li>
+				<div class="btn-toolbar">
+					<form id="edit_form" action="{% url 'update' pk %}"></form>
+					<form id="delete_form" action="{% url 'delete' pk %}"></form>
+					<button class="btn btn-lg btn-success" type="submit" form="edit_form">Edit</button>
+					<button class="btn btn-lg btn-danger" type="submit" form="delete_form">DELETE</button>
+				</div>
+				<hr />
+				{% endwith %}
+
+			{% endfor %}
+		</ul>
+
+		{% include 'pagination.html' %}		
+
+	{% else %}
+		<p>No servers to show.</p>
+	{% endif %}
+
+</div>
+
+<script>
+$(function() {
+
+	// var assignments
+	var variables = [];
+	var servers = [];
+	var pair = [];
+	$(".current_data").each(function(){
+		pair = $(this).attr('id').split("__");
+		servers.push(pair[0]);
+		variables.push(pair[1]);
+	});
+	servers = ArrayUnique(servers);
+	variables = ArrayUnique(variables);
+
+	// onload
+	Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables });
+	
+	// add active class to nav
+	$("a:contains('Home')").parent().addClass("active");
+
+	// update on intervals
+	setInterval( function() {
+		Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables })
+		}, 20000 
+	);
+
+});
+</script>
+
+{% endblock %}

@@ -14,9 +14,9 @@
 </div><br />
 	
 <div class="row">
-	<form class="my-form" action="{% url 'server_add_comment' server.pk %}">
+	<form action="{% url 'server_add_comment' server.pk %}">
 		{{ form.comment }}
-		<button class="btn btn-lg btn-primary" type="submit">Post a comment</button>
+		<button class="btn btn-lg btn-primary" type="submit" style="float: left; margin-left: 5%;">Post a comment</button>
 	</form>
 </div>
 	

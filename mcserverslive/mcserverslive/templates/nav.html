@@ -19,7 +19,7 @@
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="{% url 'my_list' %}">My Servers</a></li>
 						<li class=""><a href="{% url 'auth_password_change' %}">Change Password</a></li>
-						<li class=""><a href="{% url 'accounts:email_settings' %}">Email Settings</a></li>
+						<li class=""><a href="{% url 'accounts:email_settings' user.pk %}">Email Settings</a></li>
 					</ul>
 				</li>
 				<li class=""><a href="{% url 'create' %}">Add a Server</a></li>

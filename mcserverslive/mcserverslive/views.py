@@ -44,7 +44,10 @@ class ServerListView(ListView):
 # User Server List View ##################
 ##########################################
 
-class MyServerListView(ServerListView):
+class MyServerListView(ListView):
+	template_name = 'mcserverslive/my_server_list.html'
+	model = Server
+	paginate_by = 20
 
 	@method_decorator(login_required)
 	def dispatch(self, *args, **kwargs):
@@ -155,6 +158,11 @@ class ServerCommentCreateView(CreateView):
 		form.instance.user = self.request.user
 		form.instance.server = get_object_or_404(Server,id=self.kwargs['pk'])
 		return super(ServerCommentCreateView, self).form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super(ServerCommentCreateView, self).get_context_data(**kwargs)
+		context['server'] = get_object_or_404(Server, id=self.kwargs['pk'])
+		return context
 
 	def get_success_url(self):
 		return reverse('detail', kwargs={'pk': self.kwargs['pk']})

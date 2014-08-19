@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Registeration{% endblock %}
+{% block title %}Registration{% endblock %}
 
 {% block content %}
 
@@ -8,16 +8,16 @@
 	<p class="lead">Email Settings</p>
 </div>
 
-<form class="my-form" method='post' action='.'>{% csrf_token %}
+<form class="my-form" method='post' action="">{% csrf_token %}
 		{{ form.setting }}
-	<button class="btn btn-lg btn-warning" type="submit">Update</button>
+	<button class="btn btn-lg btn-warning btn-block" type="submit">Update</button>
 </form>
 
 <script>
 $(function() {
-// cause problems?
-//	$("a:contains('Account')").parent().addClass("active");
 
+	$("a:contains('Account')").parent().addClass("active");
+	$("ul[id=id_setting]").addClass("form-control");
 });
 </script>
 

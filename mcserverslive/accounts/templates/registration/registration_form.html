@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Registeration{% endblock %}
+{% block title %}Registration{% endblock %}
 
 {% block content %}
 
@@ -8,6 +8,7 @@
 </div>
 
 <form class="my-form" method='post' action='.'>{% csrf_token %}
+	{% include 'form_errors.html' %}
 	{{ form.username }}
 	{{ form.email }}
 	{{ form.password1 }}
@@ -28,6 +29,10 @@ $(function() {
 	$("input[name=email]").attr("placeholder", "Email");
 	$("input[name=password1]").attr("placeholder", "Password");
 	$("input[name=password2]").attr("placeholder", "Password again");
+
+	$("select").addClass("form-control");
+	$("iframe").addClass("form-control");
+//	$("iframe").removeAttr("height", "width");
 });
 </script>
 

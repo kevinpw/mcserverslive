@@ -18,6 +18,10 @@ font-size: 16px;
 .my-form .form-control:focus {
 z-index: 2;
 }
+.my-form input[type="file"] {
+	margin-bottom: 10%;
+	font-size: 100%;
+}
 /*
 .my-form input[type="email"] {
 margin-bottom: -1px;
@@ -32,6 +36,9 @@ border-top-right-radius: 0;
 */
 .my-form button {
 	margin-top: 1%;
+}
+.my-form textarea {
+	resize: none;
 }
 
 
@@ -53,6 +60,8 @@ border-top-right-radius: 0;
 }
 
 .display_none { display: none; }
+
+#id_setting { list-style-type: none; }
 
 /*
 

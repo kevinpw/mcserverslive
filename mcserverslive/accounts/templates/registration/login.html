@@ -6,17 +6,17 @@
 	<h1>Login</h1>
 </div><br />
 
-{% if form.errors %}
-	<div class="alert alert-warning" role="alert">Your username and password didn't match. Please try again.</div>
-{% endif %}
-
 <form class="my-form" action="{% url 'accounts:register' %}" id="registration_form"></form>
 <form class="my-form" action="{% url 'django.contrib.auth.views.password_reset' %}" id="password_reset_form"></form>
 
 <form class="my-form" method="post" action="{% url 'auth_login' %}" role="form">{% csrf_token %}
-
-		{{ form.username }}
-		{{ form.password }}
+	{% if form.non_field_errors %}
+		<div class="alert alert-warning" role="alert">
+			{{ form.non_field_errors }}
+		</div>
+	{% endif %}
+	{{ form.username }}
+	{{ form.password }}
 
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 	<input type="hidden" name="next" value="{{ next }}" />
