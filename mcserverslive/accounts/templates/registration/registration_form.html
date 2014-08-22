@@ -24,18 +24,20 @@
 		<span class="recaptcha_only_if_image">Enter the words above:</span>
 		<span class="recaptcha_only_if_audio">Enter the numbers you hear:</span>
 		<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
-		<button class="btn btn-xs btn-primary" type="button" onclick="javascript:Recaptcha.reload()">
-			<span class="glyphicon glyphicon-refresh"></span>
-		</button>		
-		<button class="btn btn-xs btn-primary" type="button" onclick="javascript:Recaptcha.switch_type('audio')">
-			<span class="glyphicon glyphicon-volume-up"></span>
-		</button>
-		<button class="btn btn-xs btn-primary" type="button" onclick="javascript:Recaptcha.switch_type('image')">
-			<span class="glyphicon glyphicon-picture"></span>
-		</button>
-		<button class="btn btn-xs btn-warning" type="button" onclick="javascript:Recaptcha.showhelp()">
-			<span class="glyphicon glyphicon-info-sign"></span>
-		</button>
+		<div class="btn-toolbar">
+			<button class="btn btn-xs btn-primary" type="button" onclick="javascript:Recaptcha.reload()">
+				<span class="glyphicon glyphicon-refresh"></span>
+			</button>		
+			<button class="btn btn-xs btn-primary" type="button" onclick="javascript:Recaptcha.switch_type('audio')">
+				<span class="glyphicon glyphicon-volume-up"></span>
+			</button>
+			<button class="btn btn-xs btn-primary" type="button" onclick="javascript:Recaptcha.switch_type('image')">
+				<span class="glyphicon glyphicon-picture"></span>
+			</button>
+			<button class="btn btn-xs btn-warning" type="button" onclick="javascript:Recaptcha.showhelp()">
+				<span class="glyphicon glyphicon-info-sign"></span>
+			</button>
+		</div>
 	</div>
 
 	{{ form.captcha }}

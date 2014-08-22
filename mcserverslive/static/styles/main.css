@@ -42,7 +42,11 @@ z-index: 2;
 	border: 1px solid #ddd;
 	background: #fff;
 }
+
+
+/* recaptcha */
 #recaptcha_widget img { width: 70%; }
+.recaptcha_audio_cant_hear_link { display: none; }
 
 .flot {
 	width: 100%;
