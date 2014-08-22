@@ -13,12 +13,30 @@
 	{{ form.email }}
 	{{ form.password1 }}
 	{{ form.password2 }}
+	{{ form.timezone.label }}
 	{{ form.timezone}}
+
+	<div style="margin-top: 5%;">reCaptcha</div>
+
+	<div id="recaptcha_widget" style="display:none">
+		<div id="recaptcha_image" style=""></div>
+		<div class="recaptcha_only_if_incorrect_sol" style="color:red">Incorrect please try again</div>
+		<span class="recaptcha_only_if_image">Enter the words above:</span>
+		<span class="recaptcha_only_if_audio">Enter the numbers you hear:</span>
+		<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
+		<button class="btn btn-xs btn-primary btn-block" type="button" onclick="javascript:Recaptcha.reload()">Get another CAPTCHA</button>		
+		<button class="btn btn-xs btn-primary btn-block" type="button" onclick="javascript:Recaptcha.switch_type('audio')">Get audio CAPTCHA</button>
+		<button class="btn btn-xs btn-primary btn-block" type="button" onclick="javascript:Recaptcha.switch_type('image')">Get image CAPTCHA</button>
+		<button class="btn btn-xs btn-danger btn-block" type="button" onclick="javascript:Recaptcha.showhelp()">Help</button>
+	</div>
+
 	{{ form.captcha }}
-	<button class="btn btn-lg btn-primary" type="submit">Register</button>
+
+	<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 </form>
 
 <script>
+
 $(function() {
 	$("a:contains('Login')").parent().addClass("active");
 	$("input[name=username]").addClass("form-control");
@@ -29,10 +47,11 @@ $(function() {
 	$("input[name=email]").attr("placeholder", "Email");
 	$("input[name=password1]").attr("placeholder", "Password");
 	$("input[name=password2]").attr("placeholder", "Password again");
-
+	$("input[name=password2]").attr("style", "margin-bottom: 5%;");
 	$("select").addClass("form-control");
-	$("iframe").addClass("form-control");
-//	$("iframe").removeAttr("height", "width");
+	$("label[for=id_timezone]").addClass("form-control");
+	$("div[id=recaptcha_widget]").addClass("form-control");
+
 });
 </script>
 

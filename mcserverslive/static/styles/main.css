@@ -22,26 +22,17 @@ z-index: 2;
 	margin-bottom: 10%;
 	font-size: 100%;
 }
-/*
-.my-form input[type="email"] {
-margin-bottom: -1px;
-border-bottom-right-radius: 0;
-border-bottom-left-radius: 0;
-}
-.my-form input[type="password"] {
-margin-bottom: 10px;
-border-top-left-radius: 0;
-border-top-right-radius: 0;
-}
-*/
 .my-form button {
 	margin-top: 1%;
 }
 .my-form textarea {
 	resize: none;
 }
+.my-form iframe {
+	display: none;
+}
 
-
+/* flot stuff */
 .flot_shell {
 	box-sizing: border-box;
 	width: 80%;
@@ -51,6 +42,7 @@ border-top-right-radius: 0;
 	border: 1px solid #ddd;
 	background: #fff;
 }
+#recaptcha_widget img { width: 70%; }
 
 .flot {
 	width: 100%;

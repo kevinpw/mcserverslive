@@ -8,7 +8,7 @@ from accounts.models import *
 from accounts.pytz_choices import PYTZ_CHOICES
 
 class CustomRegistrationForm(RegistrationFormUniqueEmail):
-	captcha = ReCaptchaField(attrs={'theme':'white'})
+	captcha = ReCaptchaField(attrs={'theme':'custom', 'custom_theme_widget': 'recaptcha_widget'})
 	timezone = CharField(widget=Select(choices=PYTZ_CHOICES))
 
 	def __init__(self, *args, **kwargs):
