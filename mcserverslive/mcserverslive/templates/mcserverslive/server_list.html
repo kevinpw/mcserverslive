@@ -67,7 +67,11 @@
 </div>
 
 <script>
+
 $(function() {
+
+	// add active class to nav
+	$("a:contains('Home')").parent().addClass("active");
 
 	// var assignments
 	var variables = [];
@@ -81,17 +85,8 @@ $(function() {
 	servers = ArrayUnique(servers);
 	variables = ArrayUnique(variables);
 
-	// onload
-	Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables });
-	
-	// add active class to nav
-	$("a:contains('Home')").parent().addClass("active");
-
-	// update on intervals
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables })
-		}, 20000 
-	);
+	getCurrentData(servers, variables);
+	setInterval(function(){getCurrentData(servers, variables);}, 20000);
 
 });
 </script>

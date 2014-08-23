@@ -12,8 +12,8 @@ from django.conf import settings
 # Get plot data #######
 #######################
 
-def milli_since_epoch(dt):
-	tz_local = pytz.timezone('US/Eastern')
+def milli_since_epoch(dt, timezone):
+	tz_local = pytz.timezone(timezone)
 	dt = dt.astimezone(tz_local)
 	dt = dt.replace(tzinfo=None)
 	epoch = datetime(1970,1,1)
@@ -21,12 +21,12 @@ def milli_since_epoch(dt):
 	return int(delta_secs*1000)
 
 @dajaxice_register
-def get_plot_data(request, pk, flot_id, ymax_id):
+def get_plot_data(request, pk, timezone, ymax):
 
 	data = Server.objects.get(pk=pk).archivenumplayers_set.all().order_by('query_time')
-	data = { milli_since_epoch(d.query_time): d.num_players for d in data }
+	data = { milli_since_epoch(d.query_time, timezone): d.num_players for d in data }
 	
-	return json.dumps({'data': data, 'flot_id': flot_id, 'ymax_id': ymax_id})
+	return json.dumps({'data': data, 'ymax': ymax})
 
 ############################
 # Get current info #########

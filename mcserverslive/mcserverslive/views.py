@@ -1,4 +1,5 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View 
+from django.views.generic.edit import FormMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.forms import ValidationError
@@ -13,6 +14,7 @@ import random, string
 
 from mcserverslive.models import *
 from mcserverslive.forms import *
+from accounts.models import UserProfile
 
 #####################################
 # Server List View ##################
@@ -122,8 +124,24 @@ class ServerDeleteView(DeleteView):
 # Server Detail  ################
 #################################
 
-class ServerDetailView(DetailView):
+class ServerDetailView(FormMixin, DetailView):
 	model = Server
+	form_class = TimezoneForm
+
+	def get_form_kwargs(self):
+		kwargs = super(ServerDetailView, self).get_form_kwargs()
+		if self.request.user.is_authenticated():
+			timezone = get_object_or_404(UserProfile, pk=self.request.user.pk).timezone
+		else:
+			timezone = 'US/Eastern'
+		kwargs['timezone'] = timezone
+		return kwargs
+
+	def get_context_data(self, **kwargs):
+		context = super(ServerDetailView, self).get_context_data(**kwargs)
+		form_class = self.get_form_class()
+		context['form'] = self.get_form(form_class)
+		return context
 
 ######################################
 # Comment List View ##################

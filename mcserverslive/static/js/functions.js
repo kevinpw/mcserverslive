@@ -20,8 +20,12 @@ function ArrayUnique(arr) {
 	return uniq_arr;
 }
 
-// update current info
-function getCurrentData(data) {
+// current data
+var getCurrentData = function(servers, variables){
+	Dajaxice.mcserverslive.get_current_data(loadCurrentData, 
+		{'servers': servers, 'variables': variables });
+}
+function loadCurrentData(data) {
 	var variables = data.variables;
 	var servers = data.data;
 	var id = '';

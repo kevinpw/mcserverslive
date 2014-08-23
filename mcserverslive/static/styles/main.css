@@ -32,29 +32,49 @@ z-index: 2;
 	display: none;
 }
 
-/* //// flot stuff /////////////*/
-.flot_shell {
+/* //// flot stuff ////////////*/
+.flot-container {
+	max-width: 768px;
+	padding: 2px;
+	margin: 0 auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	max-width: 400px;
-	height: 200px;	
-	padding: 5px;
-	margin: 5px;
-	border: 1px solid #ddd;
-	background: #fff;
 }
-
-.flot {
+.flot-container .flot-shell {
+	position: relative;
+	width: 100%;
+	height: 200px;
+	padding: 5px;
+	font-size: 16px;
+}
+.flot-container .flot-shell .flot {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	font-size: 14px;
-	line-height: 1.2em;
+}
+.flot-container .slider-container {
+	padding: 15px 0 15px 25px;
+}
+.my-flot-form {
+	max-width: 330px;
+	padding: 15px;
+}
+.my-flot-form .form-control {
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
 }
 
 /* ///// recaptcha ///////////////*/
 #recaptcha_image { margin-top: 2%; margin-bottom: 5%; }
 @media (max-width: 400px){
 	#recaptcha_widget img { width: 70%; }
+	.flot-container { display: none; }
 }
 @media (min-width: 400px){
 	#recaptcha_widget img { width: 95%; }

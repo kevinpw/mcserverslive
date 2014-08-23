@@ -41,7 +41,7 @@
 			<tr><td>Version</td><td><div id="{{ pk }}__version" class="current_data"></div></td></tr>
 			<tr><td>IP</td><td>{{ server.ip }}:{{ server.port }}</td></tr>
 			<tr><td>Game type</td><td><div id="{{ pk }}__game_type" class="current_data"></div></td></tr>
-			<tr><td>Max players</td><td><div id="{{ pk }}__max_players"class="current_data"></div></td></tr>
+			<tr><td>Max players</td><td><div id="{{ pk }}__max_players"class="current_data">0.5</div></td></tr>
 			<tr><td>Num players</td><td><div id="{{ pk }}__num_players" class="current_data"></div></td></tr>
 			<tr><td>Votes</td><td><div id="{{ pk }}__votes" class="current_data"></div></td></tr>
 			{% if server.website %}
@@ -56,12 +56,22 @@
 
 	<h2 class="sub-header">Current Plugins</h2>
 	<p id="{{ pk }}__plugins" class="current_data"></p>
-{% comment %}
-	<h2 class="sub-header">Number of Players History</h2>
-	<div id="flot_shell" class="flot_shell">
-		<div id="flot_num_players" class="flot"></div>
+
+	<div class="flot-container">
+
+		<h2 class="sub-header">Number of Players History</h2>
+
+		<div id="flot-shell" class="flot-shell">
+			<div id="flot_num_players" class="flot"></div>
+		</div>
+		<div class="slider-container">
+			<input id="slider" class="span2" type="text" style="width: 100%;" data-slider-value="" data-slider-step="" data-slider-min="" data-slider-max="">
+		</div>
+		<form class="my-flot-form">
+			{{ form.timezone }}
+		</form>
 	</div>		
-{% endcomment %}
+
 	<h2 class="sub-header">Recent Comments</h2>
 	<hr />
 
@@ -87,7 +97,7 @@ function voteSubmit() {
 	if(user_pk=='None') {
 		$("#vote_message").html("Login to vote!");
 	} else {
-		Dajaxice.mcserverslive.vote(vote_result,{'user_pk': user_pk, 'pk': $('#pk').html() });
+		Dajaxice.mcserverslive.vote(vote_result,{'user_pk': user_pk, 'pk': pk });
 	}
 }
 function vote_result(data) {
@@ -95,53 +105,65 @@ function vote_result(data) {
 }
 
 // flot
-function Plot(flot_id, d, ymin, ymax) {
+function loadFlotData(data) {
 
-	var options = {
-
-		series: {
-			lines: { show: true, fill: true }
-		},
-		xaxis: { 
-			mode: "time",
-			twelveHourClock: true,
-		},
-		yaxis: {
-			min: ymin,
-			max: ymax
-		}
-
-	}
-	var plot = $.plot(flot_id, [d], options);
-	return plot
-}
-
-function makePlot(data) {
-	
-	var flot_id = data.flot_id;
-	var ymax = $(data.ymax_id).html();
-	var ymin = -1*(ymax/4);
+	window.ymax = data.ymax;
+	window.ymin = -1*(ymax/4);
 	var data = data.data;	
 	var d = [];
 
 	for(var i in data){
-		if(data[i] == null) data[i] = ymin;
+		if(data[i] == null) data[i] = window.ymin;
 		d.push([parseInt(i), data [i]]);
 	}
-
 	d.sort(function(a,b){return a[0]-b[0]});
+	window.flot_data = d;
+}
+var getFlotData = function(pk, timezone, ymax){
+	Dajaxice.mcserverslive.get_plot_data(loadFlotData, 
+		{'pk': pk, 'timezone': timezone, 'ymax': ymax} 
+	);
+}
 
-	var plot = Plot(flot_id, d, ymin, ymax);
-	plot.draw();
+var makePlot = function(flot_id) {
+
+	if(typeof window.flot_data != 'undefined'){
+		var ts_length = window.flot_data.length;
+		var slider_range = $("#slider").val().split(",");
+		var ind1 = Math.floor(slider_range[0]/100*ts_length);
+		var ind2 = Math.floor(slider_range[1]/100*ts_length);
+		var d = window.flot_data.slice(ind1, ind2);
+
+		var options = {
+			series: {
+				lines: { show: true, fill: true }
+			},
+			xaxis: { 
+				mode: "time",
+				timeformat: "%d%b% %I%p"
+			},
+			yaxis: {
+				min: window.ymin,
+				max: window.ymax
+			}
+		}
+	
+		if(window.ymax>=1) {	
+			var plot = $.plot(flot_id, [d], options);
+			plot.draw();
+		}
+	}
 }
 
 // document ready
 $(function() {
 
+	$("select[name=timezone]").addClass("form-control");
+
 	// var assignments
 	var pk = $("#pk").html();
 	var flot_id = "#flot_num_players";
-	var ymax_id = "#"+pk+"__max_players";
+	var ymax_id = "#"+pk+"__max_players";		
 
 	// var assignments
 	var variables = [];
@@ -155,20 +177,26 @@ $(function() {
 	servers = ArrayUnique(servers);
 	variables = ArrayUnique(variables);
 
-	// onload
-	Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables });
-	Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id} );
+	$("#slider").attr("data-slider-value", "[0,100]");
+	$("#slider").attr("data-slider-step", "1");
+	$("#slider").attr("data-slider-min", "0");
+	$("#slider").attr("data-slider-max", "100");
+	$("#slider").slider();
 
-	// updates
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables })
-		}, 10000 
-	);
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_plot_data(makePlot, {'pk': pk, 'flot_id': flot_id, 'ymax_id': ymax_id})
-		}, 20000 
-	);
+	getCurrentData(servers, variables);
+	// use delay?
+	getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());
+	setInterval(function(){getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());},5000);
+	// use delay?
+	setInterval(function(){makePlot(flot_id);},1000);
+	
+	$("#slider").on('slideStop', function(){
+		makePlot(flot_id);
+	});
 
+	$("select[name=timezone]").on('change', function() {
+		getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());
+	});
 
 });
 </script>

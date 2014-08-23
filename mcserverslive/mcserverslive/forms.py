@@ -1,10 +1,11 @@
-from django.forms import ModelForm, ValidationError, Textarea, CharField, HiddenInput, ChoiceField
+from django.forms import ModelForm, Form, ValidationError, Textarea, CharField, HiddenInput, ChoiceField, Select
 from django.core.files.images import get_image_dimensions
 from django.conf import settings
 from django.utils import timezone
 
 from mcserverslive.models import Server, ServerComment
 from mcstatus.minecraft_query import MinecraftQuery
+from accounts.pytz_choices import PYTZ_CHOICES
 
 ###########################
 # Server Update Form ######
@@ -108,4 +109,15 @@ class ServerCommentForm(ModelForm):
 		if commit:
 			instance.save()
 		return instance
+
+##################################
+# timezone select flot ###########
+##################################
+
+class TimezoneForm(Form):
+	timezone = CharField(widget=Select(choices=PYTZ_CHOICES))
+
+	def __init__(self, timezone, *args, **kwargs):
+		super(TimezoneForm, self).__init__(*args, **kwargs)
+		self.fields['timezone'].initial = timezone
 
