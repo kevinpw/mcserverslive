@@ -125,11 +125,20 @@ var getFlotData = function(pk, timezone, ymax){
 	);
 }
 
+var make_y_ticks = function(){
+	var y_ticks = [0];
+	y_ticks.push(Math.floor(window.ymax/3));
+	y_ticks.push(Math.floor(2*window.ymax/3));
+	y_ticks.push(window.ymax);
+	return y_ticks;
+}
+
 var makePlot = function(flot_id) {
 
 	if(typeof window.flot_data != 'undefined'){
 		var ts_length = window.flot_data.length;
 		var slider_range = $("#slider").val().split(",");
+		if(slider_range[0]=="") slider_range = [0,100]
 		var ind1 = Math.floor(slider_range[0]/100*ts_length);
 		var ind2 = Math.floor(slider_range[1]/100*ts_length);
 		var d = window.flot_data.slice(ind1, ind2);
@@ -144,7 +153,8 @@ var makePlot = function(flot_id) {
 			},
 			yaxis: {
 				min: window.ymin,
-				max: window.ymax
+				max: window.ymax,
+				ticks: make_y_ticks()
 			}
 		}
 	
@@ -184,10 +194,9 @@ $(function() {
 	$("#slider").slider();
 
 	getCurrentData(servers, variables);
-	// use delay?
 	getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());
+	makePlot(flot_id);
 	setInterval(function(){getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());},5000);
-	// use delay?
 	setInterval(function(){makePlot(flot_id);},1000);
 	
 	$("#slider").on('slideStop', function(){
