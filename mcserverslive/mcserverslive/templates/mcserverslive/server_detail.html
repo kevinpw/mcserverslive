@@ -157,11 +157,8 @@ var makePlot = function(flot_id) {
 				ticks: make_y_ticks()
 			}
 		}
-		console.log(window.ymax);
-		if(window.ymax>=1) {	
-			var plot = $.plot(flot_id, [d], options);
-			plot.draw();
-		}
+		var plot = $.plot(flot_id, [d], options);
+		plot.draw();
 	}
 }
 
