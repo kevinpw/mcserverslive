@@ -23,6 +23,9 @@ def milli_since_epoch(dt, timezone):
 @dajaxice_register
 def get_plot_data(request, pk, timezone, ymax):
 
+	if ymax == "0.5":
+		ymax = Server.objects.get(pk=pk).max_players
+
 	data = Server.objects.get(pk=pk).archivenumplayers_set.all().order_by('query_time')
 	data = { milli_since_epoch(d.query_time, timezone): d.num_players for d in data }
 	
