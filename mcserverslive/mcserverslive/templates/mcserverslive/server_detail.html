@@ -196,8 +196,8 @@ $(function() {
 	getCurrentData(servers, variables);
 	getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());
 	makePlot(flot_id);
-	setInterval(function(){getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());},5000);
-	setInterval(function(){makePlot(flot_id);},1000);
+	setInterval(function(){getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());},20000);
+	setInterval(function(){makePlot(flot_id);},5000);
 	
 	$("#slider").on('slideStop', function(){
 		makePlot(flot_id);
