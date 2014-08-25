@@ -131,7 +131,7 @@ class ServerDetailView(FormMixin, DetailView):
 	def get_form_kwargs(self):
 		kwargs = super(ServerDetailView, self).get_form_kwargs()
 		if self.request.user.is_authenticated():
-			timezone = get_object_or_404(UserProfile, pk=self.request.user.pk).timezone
+			timezone = get_object_or_404(User, pk=self.request.user.pk).userprofile.timezone
 		else:
 			timezone = 'US/Eastern'
 		kwargs['timezone'] = timezone
