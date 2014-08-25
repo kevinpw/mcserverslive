@@ -1,17 +1,13 @@
 {% extends "base.html" %}
 
-{% block description %}
-<meta name="description" content="Minecraft Server List" />
-{% endblock %}
+{% block title %}My Minecraft Servers{% endblock %}
 
-{% block title %}My Servers{% endblock %}
+{% block description %}
+<meta name="description" content="My Minecraft Servers" />
+{% endblock %}
 
 {% block footer %}
 {% include 'footer.html' %}
-{% endblock %}
-
-{% block auth_bar %}
-{% include 'auth_bar.html' %}
 {% endblock %}
 
 {% block content %}
@@ -20,6 +16,7 @@
 	<h1>mcserverslive</h1>
 	<p class="lead">A Minecraft server list connected live</p>
 </div>
+
 <div id="server_list">
 	{% if object_list %}
 		<ul style="list-style-type: none; padding: 0;">
@@ -75,6 +72,9 @@
 <script>
 $(function() {
 
+	// add active class to nav
+	$("a:contains('Account')").parent().addClass("active");
+
 	// var assignments
 	var variables = [];
 	var servers = [];
@@ -87,17 +87,8 @@ $(function() {
 	servers = ArrayUnique(servers);
 	variables = ArrayUnique(variables);
 
-	// onload
-	Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables });
-	
-	// add active class to nav
-	$("a:contains('Home')").parent().addClass("active");
-
-	// update on intervals
-	setInterval( function() {
-		Dajaxice.mcserverslive.get_current_data(getCurrentData, {'servers': servers, 'variables': variables })
-		}, 20000 
-	);
+	getCurrentData(servers, variables);
+	setInterval(function(){getCurrentData(servers, variables);}, 20000);
 
 });
 </script>

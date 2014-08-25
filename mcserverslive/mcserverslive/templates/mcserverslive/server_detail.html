@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Detail{% endblock %}
+{% block title %}{{ server.server_name }} Minecraft Server{% endblock %}
 
-{% block auth_bar %}
-{% include 'auth_bar.html' %}
+{% block description %}
+<meta name="description" content="{{ server.server_name }} Minecraft Server" />
 {% endblock %}
 
 {% block content %}
@@ -191,15 +191,9 @@ $(function() {
 	$("#slider").attr("data-slider-max", "100");
 	$("#slider").slider();
 
-//	var dfd = $.Deferred();
 	getCurrentData(servers, variables);
 	getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());
 	makePlot(flot_id);
-
-//	dfd.done(getCurrentData(servers, variables))
-//		.done(getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html()))
-//		.done(makePlot(flot_id));
-//	dfd.resolve();
 
 	setInterval(function(){getFlotData(pk, $("select[name=timezone]").val(), $(ymax_id).html());},20000);
 	setInterval(function(){makePlot(flot_id);},3000);

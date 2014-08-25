@@ -2,16 +2,14 @@
 
 {% block title %}Server Form{% endblock %}
 
-{% block auth_bar %}
-{% include 'auth_bar.html' %}
-{% endblock %}
-
 {% block content %}
+
 <div class="page-heading">
 	<h1>Delete Confirm</h1>
 	<p class="lead">Are you sure you want to delete "{{ object }}"?</p>
 	<p class="lead">It DELETES ALL of our data associated with it.</p>
 </div>
+
 <form action="" method="post">{% csrf_token %}
     <button class="btn btn-lg btn-danger" type="submit"/>Confirm DELETE</button>
 </form>

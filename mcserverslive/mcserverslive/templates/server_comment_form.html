@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Comment on {{ server.server_name }}{% endblock %}
 
-{% block auth_bar %}
-{% include 'auth_bar.html' %}
+{% block description %}
+<meta name="description" content="Comment on {{ server.server_name }}" />
 {% endblock %}
 
 {% block content %}

@@ -72,7 +72,7 @@ class ServerCreateView(CreateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(ServerCreateView, self).get_context_data(**kwargs)
-		context['rand_motd'] = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(25))
+		context['rand_motd'] = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(15))
 		return context
 
 	def form_valid(self, form):

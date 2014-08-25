@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{{ server.server_name }} Comments{% endblock %}
 
-{% block auth_bar %}
-{% include 'auth_bar.html' %}
+{% block description %}
+<meta name="description" content="{{ server.server_name }} Comments" />
 {% endblock %}
 
 {% block content %}
 
 <div class="page-header">
-	<h1>Comments</h1>
-	<p class="lead">{{ server.server_name }}</p>
+	<h1>{{ server.server_name }} Comments</h1>
 </div><br />
 	
 <div class="row">
