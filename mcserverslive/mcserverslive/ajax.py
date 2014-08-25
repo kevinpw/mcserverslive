@@ -2,10 +2,9 @@ import json, pytz
 from datetime import datetime
 from dajaxice.decorators import dajaxice_register
 from django.utils import timezone
-from django.shortcuts import get_object_or_404
 
 from mcserverslive.models import Server
-from accounts.models import UserProfile
+from django.contrib.auth.models import User
 from django.conf import settings
 
 #######################
@@ -93,14 +92,18 @@ def get_current_data(request, servers, variables):
 @dajaxice_register
 def vote(request, user_pk, pk):
 
-	userprofile = get_object_or_404(UserProfile, id=user_pk)
+	# change this to a try -- bad code id not user_pk try User.userprofile or lazy
+	try:
+		userprofile = User.objects.get(pk=user_pk).userprofile
+	except:
+		userprofile = None
 		
 	if userprofile.voted:
 		data = 'You already voted today!'
 	else:
 		userprofile.voted = True
 		userprofile.save()
-		server = get_object_or_404(Server, id=pk)
+		server = Server.objects.get(id=pk)
 		server.votes = server.votes + 1
 		server.save()
 		data = 'Voted Up!'
