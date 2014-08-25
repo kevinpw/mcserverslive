@@ -21,7 +21,7 @@ class Server(models.Model):
 	max_players = models.PositiveSmallIntegerField(null=True)
 	game_type = models.CharField(max_length = 10, null=True) # are these choices? origin?
 	website = models.URLField(blank=True)
-	description = models.CharField(max_length = 2000)
+	description = models.CharField(max_length=2000)
 	votes = models.PositiveSmallIntegerField(default=0)
 
 	class Meta:
