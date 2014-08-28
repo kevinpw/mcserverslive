@@ -14,7 +14,7 @@
 
 	{% with pk=server.pk %}
 
-	<form id="all_comments_form" action="{% url 'server_comments' pk %}"></form>
+	<form id="all_comments_form" action="{% url 'server_comments' server.pk %}"></form>
 
 	<div class="page-header">
 		<h1><div id="{{ pk }}__server_name" class="current_data"></div></h1>
@@ -94,6 +94,7 @@
 // voting
 function voteSubmit() {
 	var user_pk = $('#user_pk').html();
+	var pk = $('#pk').html();
 	if(user_pk=='None') {
 		$("#vote_message").html("Login to vote!");
 	} else {
