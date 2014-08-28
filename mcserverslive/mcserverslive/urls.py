@@ -29,6 +29,10 @@ urlpatterns = patterns('',
 	url(r'^accounts/', include('accounts.urls',namespace='accounts')),
 	url(r'^accounts/', include('registration.backends.default.urls')),
 	url(r'^accounts/', include('django.contrib.auth.urls')),
+	url(r'^summernote/', include('django_summernote.urls')),
+
+	url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt')),
+
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.ADMIN_ENABLED:
