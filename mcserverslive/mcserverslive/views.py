@@ -43,7 +43,7 @@ class ServerListView(ListView):
 		return context
 
 	def get_queryset(self):
-		return Server.objects.all().order_by('votes')
+		return Server.objects.all().order_by('-votes')
 
 ##########################################
 # User Server List View ##################
@@ -59,7 +59,7 @@ class MyServerListView(ListView):
 		return super(MyServerListView, self).dispatch(*args, **kwargs)
 
 	def get_queryset(self):
-		return Server.objects.filter(user=self.request.user).order_by('votes')
+		return Server.objects.filter(user=self.request.user).order_by('-votes')
 
 ####################################
 # Create a Server Listing ##########
