@@ -128,8 +128,10 @@ var getFlotData = function(pk, timezone, ymax){
 
 var make_y_ticks = function(){
 	var y_ticks = [0];
-	y_ticks.push(Math.floor(window.ymax/3));
-	y_ticks.push(Math.floor(2*window.ymax/3));
+	var increment = Math.floor(window.ymax/4);
+	y_ticks.push(increment);
+	y_ticks.push(2*increment);
+	y_ticks.push(3*increment);
 	y_ticks.push(window.ymax);
 	return y_ticks;
 }
