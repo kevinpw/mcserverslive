@@ -92,7 +92,6 @@ def get_current_data(request, servers, variables):
 @dajaxice_register
 def vote(request, user_pk, pk):
 
-	# change this to a try -- bad code id not user_pk try User.userprofile or lazy
 	try:
 		userprofile = User.objects.get(pk=user_pk).userprofile
 	except:
@@ -103,7 +102,7 @@ def vote(request, user_pk, pk):
 	else:
 		userprofile.voted = True
 		userprofile.save()
-		server = Server.objects.get(id=pk)
+		server = Server.objects.get(pk=pk)
 		server.votes = server.votes + 1
 		server.save()
 		data = 'Voted Up!'

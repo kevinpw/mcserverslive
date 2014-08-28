@@ -15,14 +15,16 @@
 <form class="my-form" enctype="multipart/form-data" action="" method="post">{% csrf_token %}
 	{% include 'form_errors.html' %}
 	{{ form.server_name }}
+	{{ form.website }}
 	{{ form.banner.label }}
 	<div>Must be 560x100 pixels</div>
 	{{ form.banner }}
 	<div id="counter_description">Maximum characters: 2000</div></td></tr>
 	{{ form.description }}
-	{{ form.website }}
 	<button class="btn btn-lg btn-warning btn-block" type="submit"/>Update</button>
 </form>	
+
+{% include 'summernote_scripts.html' %}
 
 <script>
 
@@ -31,13 +33,13 @@ $(function() {
 	$("a:contains('Account')").parent().addClass("active");
 	$("input[name=server_name]").addClass("form-control");
 	$("input[name=server_name]").attr("placeholder", "Server Name");
-	$("input[name=server_name]").attr("style","margin-bottom: 5%;");
+	$("input[name=website]").addClass("form-control");
+	$("input[name=website]").attr("placeholder", "Website (optional)");
+	$("input[name=website]").attr("style","margin-bottom: 5%;");
+	$("input[name=banner]").addClass("form-control");
 	$("textarea[name=description]").addClass("form-control");
 	$("textarea[name=description]").attr("placeholder", "Description");
-	$("input[name=website]").addClass("form-control");
-	$("input[name=website]").attr("placeholder", "Website");
 
-	$("input[name=banner]").addClass("form-control");
 });
 
 </script>

@@ -6,6 +6,7 @@ from django.utils import timezone
 from mcserverslive.models import Server, ServerComment
 from mcstatus.minecraft_query import MinecraftQuery
 from accounts.pytz_choices import PYTZ_CHOICES
+from django_summernote.widgets import SummernoteInplaceWidget
 
 ###########################
 # Server Update Form ######
@@ -17,7 +18,7 @@ class ServerUpdateForm(ModelForm):
 	class Meta:
 		model = Server
 		fields = ['server_name','banner','description','website']
-		widgets = {'description': Textarea(attrs={'onKeyUp': "textCounter(this,'counter_description',2000);"}), }
+		widgets = { 'description': SummernoteInplaceWidget() }
 
 	def clean(self):
 		cleaned_data = super(ServerUpdateForm, self).clean()
@@ -38,7 +39,7 @@ class ServerCreateForm(ModelForm):
 	class Meta:
 		model = Server
 		fields = ['server_name','banner','ip','port','description','website']
-		widgets = { 'description': Textarea(attrs={'onKeyUp': "textCounter(this,'counter_description',2000);"}), }
+		widgets = { 'description': SummernoteInplaceWidget() }
 
 	def clean(self):
 

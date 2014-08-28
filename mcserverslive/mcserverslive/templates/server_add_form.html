@@ -17,6 +17,7 @@
 <form class="my-form" enctype="multipart/form-data" action="" method="post">{% csrf_token %}
 	{% include 'form_errors.html' %}
 	{{ form.server_name }}
+	{{ form.website }}
 	{{ form.banner.label }}
 	<div>Must be 560x100 pixels</div>
 	{{ form.banner }}
@@ -24,30 +25,44 @@
 	{{ form.port }}
 	<div id="counter_description">Maximum characters: 2000</div></td></tr>
 	{{ form.description }}
-	{{ form.website }}
 	<button class="btn btn-lg btn-success btn-block" type="submit"/>Add</button>
 	<input type="hidden" name="rand_motd" value="{{ rand_motd }}" />
 </form>	
 
+{% include 'summernote_scripts.html' %}
+
 <script>
+
+function test(){ console.log('oh, shit');}
+
+function SummernoteTextCounter(field, cnt, maxlimit) {
+	var remaining = maxlimit - field.value.length;
+	if (field.value.length > maxlimit) {
+		field.value = field.value.substring(0, maxlimit);
+		document.getElementById(cnt).innerHTML = "characters left: 0";
+	} else {
+		document.getElementById(cnt).innerHTML = "characters left: " + remaining.toString();
+	}
+}
 
 $(function() {
 	$("a:contains('Add')").parent().addClass("active");
 	$("input[name=server_name]").addClass("form-control");
 	$("input[name=server_name]").attr("placeholder", "Server Name");
-	$("input[name=server_name]").attr("style","margin-bottom: 5%;");
 	$("input[name=ip]").addClass("form-control");
 	$("input[name=ip]").attr("placeholder", "IP");
 	$("input[name=port]").addClass("form-control");
 	$("input[name=port]").attr("style", "margin-bottom: 3%;");
-	$("textarea[name=description]").addClass("form-control");
-	$("textarea[name=description]").attr("placeholder", "Description");
 	$("input[name=website]").addClass("form-control");
-	$("input[name=website]").attr("placeholder", "Website");
+	$("input[name=website]").attr("placeholder", "Website (optional)");
+	$("input[name=website]").attr("style","margin-bottom: 5%;");
 
 	$("input[name=banner]").addClass("form-control");
-
+	$("div[class=note-editable]").attr("onkeyup", "test();");
+//	$("textarea[name=description]").addClass("form-control");
+//	$("textarea[name=description]").attr("placeholder", "Description");
 });
 
 </script>
+
 {% endblock %}

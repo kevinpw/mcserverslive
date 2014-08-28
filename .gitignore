@@ -7,6 +7,4 @@ emails.txt
 *.pyc
 *.png
 
-!mcserverslive/static/images/website_banner.png
-
 static_root/
