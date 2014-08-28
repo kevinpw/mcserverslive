@@ -11,11 +11,12 @@ class Server(models.Model):
 	user = models.ForeignKey(User)
 	server_name = models.CharField(max_length = 40)
 	ip = models.CharField(max_length = 50, blank=False)
-	port = models.PositiveSmallIntegerField(default=25565, null=False)
+	port = models.PositiveSmallIntegerField(default=25565, null=False) #query-port
 
 	banner = ContentTypeRestrictedFileField(upload_to=".", 
 		content_types=['image/gif', 'image/jpeg', 'image/png',], max_upload_size=5242880)
 
+	host_port = models.PositiveSmallIntegerField(default=25565, null=True)
 	motd = models.CharField(max_length = 100, null=True)
 	version = models.CharField(max_length = 5, null=True)
 	max_players = models.PositiveSmallIntegerField(null=True)
@@ -25,7 +26,7 @@ class Server(models.Model):
 	votes = models.PositiveSmallIntegerField(default=0)
 
 	class Meta:
-		unique_together = (('ip','port'),)
+		unique_together = (('ip','port'),) #query-port
 
 	def __unicode__(self):
 		return unicode(self.server_name)

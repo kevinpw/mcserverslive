@@ -35,6 +35,7 @@ for server in servers:
 
 		full_status = query.get_rules()
 
+		server.host_port = full_status['hostport']
 		server.motd = full_status['motd']
 		server.version = full_status['version']
 		server.max_players = full_status['maxplayers']

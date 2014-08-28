@@ -16,6 +16,7 @@
 	<h1>mcserverslive</h1>
 	<p class="lead">A Minecraft server list connected live</p>
 </div>
+
 <div id="server_list">
 	{% if object_list %}
 		<ul style="list-style-type: none; padding: 0;">
@@ -30,7 +31,7 @@
 							<div id="{{ pk }}__num_players" class="current_data" style="float: left;"></div>
 							<div style="float: left;">/</div>
 							<div id="{{ pk }}__max_players"class="current_data" style="float: left; padding: 0 0.5em 0 0;"></div><p>players</p>
-							<div id="server_ip">IP: <a href="{% url 'detail' server.pk %}">{{ server.ip }}:{{ server.port }}</a></div>
+							<div id="server_ip">IP: <a href="{% url 'detail' server.pk %}">{{ server.ip }}:{{ server.host_port }}</a></div>
 							<div style="float: left; padding: 0 5px 0 0;">Votes:</div><div id="{{ pk }}__votes" class="current_data"></div>
 							<div style="float: left; padding: 0 5px 0 0;">Last queried:</div><div id="{{ pk }}__last_queried" class="current_data"></div><br />
 						</div>
