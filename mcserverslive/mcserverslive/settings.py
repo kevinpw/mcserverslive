@@ -30,7 +30,7 @@ INSTALLED_APPS = (
 	'registration',
 	'captcha',
 	'dajaxice',
-	'django_summernote',
+#	'django_summernote',
 
 )
 
@@ -63,7 +63,7 @@ USE_TZ = True
 from local_settings import *
 
 # import summernote config
-from summernote_config import SUMMERNOTE_CONFIG
+#from summernote_config import SUMMERNOTE_CONFIG
 
 # append some default settings
 import django.conf.global_settings as DEFAULT_SETTINGS

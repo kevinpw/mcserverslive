@@ -19,22 +19,23 @@
 	{{ form.banner.label }}
 	<div>(Must be 560x100 pixels)</div>
 	{{ form.banner }}
-	<div id="description_used"></div>
+
+		{% comment %}<div id="description_used"></div>{% endcomment %}
+
+	<div id="counter_description">Maximum characters: 2000</div>
 	{{ form.description }}
 	<button class="btn btn-lg btn-success btn-block" type="submit"/>Update</button>
-</form>	
-
-{% include 'summernote_scripts.html' %}
+</form>
 
 <script>
 
-function summernoteCounter(){
-	var max_chars = 2000;
-	var html_char_count = $('.note-editable').code().length;
-	var percent_remaining = Math.round(100*(max_chars-html_char_count)/max_chars);
-	var counter_string = "Description unused: " + percent_remaining.toString() + "%";
-	$("#description_used").html(counter_string);
-}
+//function summernoteCounter(){
+//	var max_chars = 2000;
+//	var html_char_count = $('.note-editable').code().length;
+//	var percent_remaining = Math.round(100*(max_chars-html_char_count)/max_chars);
+//	var counter_string = "Description unused: " + percent_remaining.toString() + "%";
+//	$("#description_used").html(counter_string);
+//}
 
 $(function() {
 	
@@ -45,11 +46,14 @@ $(function() {
 	$("input[name=website]").attr("placeholder", "Website (optional)");
 	$("input[name=website]").attr("style","margin-bottom: 5%;");
 	$("input[name=banner]").addClass("form-control");
+
+	$("textarea[name=description]").addClass("form-control");
+	$("textarea[name=description]").attr("placeholder", "Description");
 	
-	summernoteCounter();
-	$("div[class=note-editable], button").on('keyup focus blur paste init change click', function(){
-		summernoteCounter();
-	});
+//	summernoteCounter();
+//	$("div[class=note-editable], button").on('keyup focus blur paste init change click', function(){
+//		summernoteCounter();
+//	});
 
 });
 

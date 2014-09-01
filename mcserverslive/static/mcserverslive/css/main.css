@@ -1,12 +1,10 @@
 /* mcserverslive */
 
 /* ///// GLOBAL ///////////////*/
-#recaptcha_image { margin-top: 2%; margin-bottom: 5%; }
+#recaptcha_image { margin-top: 2%; margin-bottom: 5%; margin-left: 2%; }
 .recaptcha_audio_cant_hear_link { display: none; } 
 .display_none { display: none; }
 #id_setting { list-style-type: none; }
-#current_description h1, #current_description h2 { font-size: 24px; }
-
 
 /* //// forms /////////*/
 .my-form {
@@ -84,7 +82,7 @@ z-index: 2;
 	.flot-container { display: none; }
 }
 @media (min-width: 400px){
-	#recaptcha_widget img { width: 95%; }
+	#recaptcha_widget img { width: 100%; }
 }
 
 /*/////////////// bootstrap default breakpoints /////////*/
