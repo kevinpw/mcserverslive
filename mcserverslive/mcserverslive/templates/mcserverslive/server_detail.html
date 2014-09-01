@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}{{ server.server_name }} Minecraft Server{% endblock %}
 
@@ -39,7 +40,10 @@
 	<div class="table-responsive">
 		<table class="table table-striped" style="max-width: 800px; margin: 0 auto;">
 			<tr><td>Version</td><td><div id="{{ pk }}__version" class="current_data"></div></td></tr>
-			<tr><td>IP</td><td>{{ server.ip }}:{{ server.host_port }}</td></tr>
+			<tr><td>IP</td><td>
+				<div id="server_ip" style="float: left; padding 0 0.5em 0 0;">{{ server.ip }}:</div>
+				<div id="{{ pk }}__host_port" class="current_data">{{ server.host_port }}</div>
+			</td></tr>
 			<tr><td>Game type</td><td><div id="{{ pk }}__game_type" class="current_data"></div></td></tr>
 			<tr><td>Max players</td><td><div id="{{ pk }}__max_players"class="current_data">0.5</div></td></tr>
 			<tr><td>Num players</td><td><div id="{{ pk }}__num_players" class="current_data"></div></td></tr>
@@ -52,7 +56,10 @@
 	</div>
 
 	<h2 class="sub-header">Current Description</h2>
-		{{ server.description }}
+	<hr />
+	<div id="current_description" style="max-width: 800px; margin: 0 auto; padding: 5%;">
+		{{ server.description | safe }}
+	</div><hr />
 
 	<h2 class="sub-header">Current Plugins</h2>
 	<p id="{{ pk }}__plugins" class="current_data"></p>
@@ -75,19 +82,26 @@
 	<h2 class="sub-header">Recent Comments</h2>
 	<hr />
 
-	{% if server.servercomment_set %}
-		{% for comment in server.servercomment_set.all reversed %}
-			{% if forloop.counter0 < 10 %}
-				{% include 'servercomment_list_item.html' %}
-			{% endif %}
-		{% endfor %}
-	{% else %}
-		<p>No comments.</p>
-	{% endif %}
+	{% for comment in server.servercomment_set.all reversed %}
+		{% if forloop.counter0 < 10 %}
+			{% include 'servercomment_list_item.html' %}
+		{% endif %}
+	{% endfor %}
 
 	{% endwith %}
 
 </div>
+
+	<script language="javascript" type="text/javascript" src="{% static "flot/js/jquery.flot.js" %}"></script>
+	<script language="javascript" type="text/javascript" src="{% static "flot/js/jquery.flot.time.js" %}"></script>
+	<!--[if lte IE 8]>
+		<script language="javascript" type="text/javascript" src="{% static "flot/js/excanvas.min.js" %}"></script>
+	<![endif]-->
+	<script language="javascript" type="text/javascript" src="{% static "slider/js/bootstrap-slider.js" %}"></script>
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
 
 <script>
 

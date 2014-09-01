@@ -5,11 +5,12 @@
 .recaptcha_audio_cant_hear_link { display: none; } 
 .display_none { display: none; }
 #id_setting { list-style-type: none; }
+#current_description h1, #current_description h2 { font-size: 24px; }
 
 
 /* //// forms /////////*/
 .my-form {
-	max-width: 430px;
+	max-width: 490px;
 	padding: 15px;
 	margin: 0 auto;
 }
@@ -77,11 +78,35 @@ z-index: 2;
 	font-size: 16px;
 }
 
+/* //////// conditional style */
 @media (max-width: 400px){
 	#recaptcha_widget img { width: 70%; }
 	.flot-container { display: none; }
 }
 @media (min-width: 400px){
 	#recaptcha_widget img { width: 95%; }
+}
+
+/*/////////////// bootstrap default breakpoints /////////*/
+
+/* custom (iPhone Retina) */
+@media (min-width: 320px){
+	
+}
+/* xs (phones) */
+@media (min-width: 480px){
+	
+}
+/* sm (tablets) */
+@media (min-width: 768px){
+	
+}
+/* md (desktops) */
+@media (min-width: 992px){
+	
+}
+/* lg (wide-screen desktops) */
+@media (min-width: 1200px){
+	
 }
 
