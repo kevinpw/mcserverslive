@@ -30,6 +30,7 @@ INSTALLED_APPS = (
 	'registration',
 	'captcha',
 	'dajaxice',
+	'axes',
 #	'django_summernote',
 
 )
@@ -41,6 +42,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'axes.middleware.FailedLoginMiddleware',
 )
 
 ROOT_URLCONF = 'mcserverslive.urls'
