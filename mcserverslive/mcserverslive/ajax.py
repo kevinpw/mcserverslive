@@ -44,6 +44,7 @@ def get_server_data(server, variables):
 	data['max_players'] = server.max_players
 	data['motd'] = server.motd
 	data['votes'] = server.votes
+	data['host_port'] = server.host_port
 
 	num_players = server.numplayers_set.latest('query_time')
 	if num_players.num_players != None:

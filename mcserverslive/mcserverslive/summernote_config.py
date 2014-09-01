@@ -27,14 +27,17 @@ SUMMERNOTE_CONFIG = {
 
     # Customize toolbar buttons
     'toolbar': [
-         ['style', ['style']],
+        ['style', ['style']],
         ['font', ['bold', 'italic', 'underline', 'clear']],
-        ['fontname', ['fontname']],
+#        ['fontname', ['fontname']],
+#        ['fontsize', ['fontsize']],
+#        ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
-        ['height', ['height']],
-        ['table', ['table']],
-        ['insert', ['link', 'picture', 'video', 'hr']],
-        ['view', ['fullscreen', 'codeview']],
+#        ['height', ['height']],
+#        ['table', ['table']],
+#        ['insert', ['link', 'picture', 'video', 'hr']],
+        ['insert', ['link', 'video', 'hr', 'fullscreen', 'codeview']],
+#        ['view', ['fullscreen']],
         ['help', ['help']],
     ],
 
@@ -43,4 +46,5 @@ SUMMERNOTE_CONFIG = {
 
     # Set custom storage class for attachments.
 #    'attachment_storage_class': 'my.custom.storage.class.name',
+
 }

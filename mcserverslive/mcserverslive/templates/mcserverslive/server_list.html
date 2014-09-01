@@ -31,7 +31,10 @@
 							<div id="{{ pk }}__num_players" class="current_data" style="float: left;"></div>
 							<div style="float: left;">/</div>
 							<div id="{{ pk }}__max_players"class="current_data" style="float: left; padding: 0 0.5em 0 0;"></div><p>players</p>
-							<div id="server_ip">IP: <a href="{% url 'detail' server.pk %}">{{ server.ip }}:{{ server.host_port }}</a></div>
+							<a href="{% url 'detail' server.pk %}">
+								<div id="server_ip" style="float: left; padding 0 0.5em 0 0;">IP: {{ server.ip }}:</div>
+								<div id="{{ pk }}__host_port" class="current_data">{{ server.host_port }}</div>
+							</a>
 							<div style="float: left; padding: 0 5px 0 0;">Votes:</div><div id="{{ pk }}__votes" class="current_data"></div>
 							<div style="float: left; padding: 0 5px 0 0;">Last queried:</div><div id="{{ pk }}__last_queried" class="current_data"></div><br />
 						</div>

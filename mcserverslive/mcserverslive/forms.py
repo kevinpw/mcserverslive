@@ -2,6 +2,7 @@ from django.forms import ModelForm, Form, ValidationError, Textarea, CharField, 
 from django.core.files.images import get_image_dimensions
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from mcserverslive.models import Server, ServerComment
 from mcstatus.minecraft_query import MinecraftQuery
@@ -69,6 +70,7 @@ class ServerCreateForm(ModelForm):
 		instance.version = self.full_status['version']
 		instance.max_players = self.full_status['maxplayers']
 		instance.game_type = self.full_status['gametype']
+		instance.host_port = self.full_status['hostport']
 
 		if commit:
 			instance.save()
@@ -82,6 +84,9 @@ class ServerCreateForm(ModelForm):
 		
 		for plugin in plugins:
 			instance.plugin_set.create(plugin=plugin)
+
+		instance.servercomment_set.create(
+			comment_time = right_now, user=User.objects.get(pk=1), comment = u'Welcome to the site!') 
 
 		return instance
 
