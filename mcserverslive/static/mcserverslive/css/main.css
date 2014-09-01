@@ -99,11 +99,11 @@ z-index: 2;
 }
 /* sm (tablets) */
 @media (min-width: 768px){
-	
+	.h2-margin-top { margin-top: 8%; }
 }
 /* md (desktops) */
 @media (min-width: 992px){
-	
+	.h2-margin-top { margin-top: 10%; }
 }
 /* lg (wide-screen desktops) */
 @media (min-width: 1200px){

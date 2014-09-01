@@ -36,7 +36,7 @@
 
 	<div id="{{ pk }}__motd" class="current_data" style="margin-top: 5%;"></div>
 
-	<h2 class="sub-header">Current Info</h2>
+	<h2 class="sub-header h2-margin-top">Current Info</h2>
 	<div class="table-responsive">
 		<table class="table table-striped" style="max-width: 800px; margin: 0 auto;">
 			<tr><td>Version</td><td><div id="{{ pk }}__version" class="current_data"></div></td></tr>
@@ -55,18 +55,18 @@
 		</table>
 	</div>
 
-	<h2 class="sub-header">Current Description</h2>
+	<h2 class="sub-header h2-margin-top">Current Description</h2>
 	<hr />
 	<div id="current_description" style="max-width: 800px; margin: 0 auto; padding: 5%;">
 		{{ server.description }}
 	</div><hr />
 
-	<h2 class="sub-header">Current Plugins</h2>
+	<h2 class="sub-header h2-margin-top">Current Plugins</h2>
 	<p id="{{ pk }}__plugins" class="current_data"></p>
 
 	<div class="flot-container">
 
-		<h2 class="sub-header">Number of Players History</h2>
+		<h2 class="sub-header h2-margin-top">Number of Players History</h2>
 
 		<div id="flot-shell" class="flot-shell">
 			<div id="flot_num_players" class="flot"></div>
@@ -79,7 +79,7 @@
 		</form>
 	</div>		
 
-	<h2 class="sub-header">Recent Comments</h2>
+	<h2 class="sub-header h2-margin-top">Recent Comments</h2>
 	<hr />
 
 	{% for comment in server.servercomment_set.all reversed %}
