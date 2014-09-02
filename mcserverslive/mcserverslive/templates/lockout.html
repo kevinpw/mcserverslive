@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Lockout Notification{% endblock %}
+
+{% block content %}
+<div class="page-header">
+	<h1>mcserverslive</h1>
+	<p class="lead">Lockout Notification</p>
+</div>
+
+<h2 class="sub-header">You are currently locked out</h2>
+<div style="margin: 10%;">
+	You attempted to login {{ failure_limit }} times, unsuccessfully. Please email support@{{ domain }} to request a reset.
+</div>
+
+<script>
+
+$(function() {
+	// add active class to nav
+	$("a:contains('Login')").parent().addClass("active");
+});
+
+</script>
+{% endblock %}
